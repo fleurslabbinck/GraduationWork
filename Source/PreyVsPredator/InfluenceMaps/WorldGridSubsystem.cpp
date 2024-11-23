@@ -1,25 +1,11 @@
 ﻿#include "WorldGridSubsystem.h"
 
-void UWorldGridSubsystem::Initialize(FSubsystemCollectionBase& Collection)
+#include "Grid.h"
+
+
+void UWorldGridSubsystem::SetupGrid()
 {
-	Super::Initialize(Collection);
-
-	FVector2D Pos{};
-
-	for (int32 Row{}; Row < Rows; ++Row)
-	{
-		for (int32 Col{}; Col < Columns; ++Col)
-		{
-			Pos = FVector2D{Row * CellSize, Col * CellSize};
-			const FWorldCell Cell{Pos};
-			WorldGrid[Row][Col] = Cell;
-		}
-	}
-}
-
-void UWorldGridSubsystem::Deinitialize()
-{
-	Super::Deinitialize();
-
-	WorldGrid.Empty();
+	m_WorldGrid = NewObject<UGrid>(GetWorld(), UGrid::StaticClass());
+	m_WorldGrid->SetCellClass(GridCellClass);
+	m_WorldGrid->Initialize(StartPosition, Rows, Columns, CellSize);
 }

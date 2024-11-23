@@ -5,9 +5,14 @@
 #include "PreyVsPredatorGameModeBase.generated.h"
 
 
+class UGrid;
+
 UCLASS()
 class PREYVSPREDATOR_API APreyVsPredatorGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void BeginPlay() override;
+
 };

@@ -1,10 +1,13 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "GridCells.h"
+#include "WorldGridCell.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "WorldGridSubsystem.generated.h"
 
+
+class UGridCell;
+class UGrid;
 
 UCLASS()
 class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
@@ -12,19 +15,24 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	int32 Rows{10};
+	TSubclassOf<UGridCell> GridCellClass{UWorldGridCell::StaticClass()};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	int32 Columns{10};
+	FVector2D StartPosition{};
+
+	UPROPERTY(EditAnywhere, Category="Grid")
+	uint32 Rows{10};
+
+	UPROPERTY(EditAnywhere, Category="Grid")
+	uint32 Columns{10};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
 	float CellSize{100.f};
 
 public:
-	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
-	virtual void Deinitialize() override;
+	void SetupGrid();
 
 private:
-	TArray<TArray<FWorldCell>> WorldGrid;
-	
+	UPROPERTY()
+	UGrid* m_WorldGrid{nullptr};
 };
