@@ -18,7 +18,7 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 	TSubclassOf<UGridCell> GridCellClass{UWorldGridCell::StaticClass()};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	FVector2D StartPosition{};
+	FVector StartPosition{};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
 	uint32 Rows{10};
@@ -27,10 +27,11 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 	uint32 Columns{10};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	float CellSize{100.f};
+	float CellSize{500.f};
 
 public:
 	void SetupGrid();
+	UGridCell* NextGrassPatch(const FVector& CurrentPosition) const;
 
 private:
 	UPROPERTY()

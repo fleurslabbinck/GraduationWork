@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "PreyController.generated.h"
 
+class UBehaviorTree;
 class UTestCondition;
 class UFlockingState;
 class UGrazingState;
@@ -16,8 +17,12 @@ class PREYVSPREDATOR_API APreyController : public AAIController
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Instanced, Category="Components")
+	UPROPERTY(EditAnywhere, Instanced, Category="Finite State Machine")
 	UFiniteStateMachine* FiniteStateMachine;
+
+	UPROPERTY(EditAnywhere, Category="Behavior Trees")
+	UBehaviorTree* GrazingBehaviorTree;
+	
 public:
 	APreyController();
 

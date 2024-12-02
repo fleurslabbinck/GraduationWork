@@ -14,7 +14,9 @@ public class PreyVsPredator : ModuleRules
 			"CoreUObject",
 			"Engine",
 			"InputCore",
-			"AIModule"
+			"AIModule",
+			"GameplayTasks",
+			"NavigationSystem"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

@@ -15,6 +15,5 @@ public:
 	UGrazingState() = default;
 	
 	virtual void OnEnter(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent) override;
-	virtual void Update(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent, float DeltaTime) override;
 	virtual void OnExit(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent) override;
 };

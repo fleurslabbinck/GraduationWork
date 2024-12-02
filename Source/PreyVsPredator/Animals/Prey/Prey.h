@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "Prey.generated.h"
 
+class UBehaviorTree;
 class UArrowComponent;
 class UCapsuleComponent;
 

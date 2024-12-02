@@ -16,9 +16,15 @@ class PREYVSPREDATOR_API UGridCell : public UObject
 public:
 	UGridCell() = default;
 	
-	virtual void Initialize(const FVector2D GridPosition, float CellSize);
+	virtual void Initialize(const FVector GridPosition, float CellSize);
 	void DrawDebugCell(uint32 Index) const;
 	
 	FRect GridCell() const;
-	FVector2D CenterPosition() const;
+	FVector CenterPosition() const;
+
+	virtual bool Available() const;
+	void SetAvailability(bool Available);
+
+private:
+	bool bAvailable{true};
 };

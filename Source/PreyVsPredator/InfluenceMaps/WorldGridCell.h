@@ -28,16 +28,12 @@ public:
 
 	void ChangeWorldType(EWorldCellType NewType);
 	EWorldCellType WorldType() const;
-
-	bool Occupied() const;
-	void Occupy();
 	
 	float Content() const;
-	void Consume();
+	bool Consume();
 	void Regenerate();
 
 private:
-	bool bOccupied{false};
 	float m_Content{MaxContent};
 
 	void SetContents(float Rate);

@@ -14,13 +14,13 @@ struct FRect
 	GENERATED_BODY()
 	
 	FRect() = default;
-	FRect(const FVector2D& Position, float Size) : Size(Size), Position(Position) {}
+	FRect(const FVector& Position, float Size) : Size(Size), Position(Position) {}
 
 	UPROPERTY(EditAnywhere)
 	float Size{};
 
 	UPROPERTY(EditAnywhere)
-	FVector2D Position{FVector2D::ZeroVector};
+	FVector Position{FVector::ZeroVector};
 };
 
 

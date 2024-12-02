@@ -1,9 +1,9 @@
 ﻿#include "PreyController.h"
 
-#include "PreyVsPredator/FiniteStateMachine/FiniteStateMachine.h"
-#include "PreyVsPredator/FiniteStateMachine/Conditions/TestCondition.h"
-#include "PreyVsPredator/FiniteStateMachine/States/FlockingState.h"
-#include "PreyVsPredator/FiniteStateMachine/States/GrazingState.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/TestCondition.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h"
 
 
 APreyController::APreyController()
@@ -23,6 +23,9 @@ APreyController::APreyController()
 void APreyController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	// Set Behavior Tree classes
+	m_GrazingState->InitializeState(this, GrazingBehaviorTree);
 
 	// Create transitions
 	FiniteStateMachine->SetStartState(m_GrazingState);
