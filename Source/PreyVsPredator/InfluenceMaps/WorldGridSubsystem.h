@@ -27,11 +27,17 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 	uint32 Columns{10};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	float CellSize{500.f};
+	float CellSize{200.f};
+
+	UPROPERTY(EditAnywhere, Category="Grid")
+	float AcceptenceDivisionFactor{5.f};
 
 public:
 	void SetupGrid();
-	UGridCell* NextGrassPatch(const FVector& CurrentPosition) const;
+	
+	float AcceptenceRadius() const;
+	UGridCell* NextGrassCell(const FVector& CurrentPosition) const;
+	bool AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const;
 
 private:
 	UPROPERTY()

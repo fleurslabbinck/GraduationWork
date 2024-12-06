@@ -10,9 +10,6 @@ class PREYVSPREDATOR_API UBTT_GoToClosestGrassPatch : public UBTTask_BlackboardB
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Navigation")
-	float MarginRadius{50.f};
-
 public:
 	UBTT_GoToClosestGrassPatch();
 

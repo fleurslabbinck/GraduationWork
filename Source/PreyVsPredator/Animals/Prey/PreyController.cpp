@@ -20,6 +20,16 @@ APreyController::APreyController()
 	m_TestCondition = CreateDefaultSubobject<UTestCondition>("Test Condition");
 }
 
+void APreyController::SetTimer(const FTimerDelegate& Delegate, float InRate)
+{
+	GetWorld()->GetTimerManager().SetTimer(m_Timer, Delegate, InRate, false);
+}
+
+void APreyController::ResetTimer()
+{
+	GetWorld()->GetTimerManager().ClearTimer(m_Timer);
+}
+
 void APreyController::BeginPlay()
 {
 	Super::BeginPlay();

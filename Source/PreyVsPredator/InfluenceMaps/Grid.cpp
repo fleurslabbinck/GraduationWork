@@ -47,6 +47,14 @@ void UGrid::Initialize(const FVector& GridPosition, uint8 GridRows, uint8 GridCo
 	}
 }
 
+UGridCell* UGrid::CurrentGridCell(const FVector& CurrentPosition) const
+{
+	const FVector2D CurrentPosition2D{CurrentPosition.X, CurrentPosition.Y};
+	const uint32 CurrentCellIndex{IndexFromPosition(CurrentPosition2D)};
+
+	return CurrentCellIndex != INDEX_NONE ? m_GridCells[CurrentCellIndex] : nullptr;
+}
+
 UGridCell* UGrid::NextGridCell(const FVector& CurrentPosition) const
 {
 	// Get the closest cell based on position (2D)
@@ -72,10 +80,10 @@ uint32 UGrid::ColumnFromIndex(uint32 Index) const
 	return Index % m_Columns;
 }
 
-FVector UGrid::PositionFromIndex(uint32 Index) const
+FVector2D UGrid::PositionFromIndex(uint32 Index) const
 {
-	if (Index >= static_cast<uint32>(m_GridCells.Num())) return FVector::ZeroVector;
-	return m_GridCells[Index]->GridCell().Position;
+	if (Index >= static_cast<uint32>(m_GridCells.Num())) return FVector2D::ZeroVector;
+	return FVector2D{m_GridCells[Index]->CenterPosition()};
 }
 
 uint32 UGrid::IndexFromPosition(const FVector2D& Position) const
@@ -96,6 +104,8 @@ uint32 UGrid::ClosestCell(const FVector2D& Position) const
 	uint32 CurrentIndex;
 	TQueue<uint32> Queue;
 	TSet<uint32> Visited;
+	TArray<uint32> Neighbors;
+	Neighbors.Reserve(m_GridDirections.Num());
 
 	Queue.Enqueue(StartIndex);
 	Visited.Add(StartIndex);
@@ -111,7 +121,9 @@ uint32 UGrid::ClosestCell(const FVector2D& Position) const
 		}
 
 		// Add neighbors to queue
-		TArray Neighbors{ValidNeighbors(CurrentIndex)};
+		Neighbors.Empty();
+		ValidNeighbors(Neighbors, Position, CurrentIndex);
+		
 		for (const uint32 Index : Neighbors)
 		{
 			if (!Visited.Contains(Index))
@@ -125,23 +137,45 @@ uint32 UGrid::ClosestCell(const FVector2D& Position) const
 	return INDEX_NONE;
 }
 
-TArray<uint32> UGrid::ValidNeighbors(uint32 Index) const
+void UGrid::ValidNeighbors(TArray<uint32>& NeighborsArr, const FVector2D& Position, uint32 Index) const
 {
-	TArray<uint32> Neighbors;
-	Neighbors.Reserve(m_GridDirections.Num());
+	TArray<std::pair<uint32, float>> NeighborSqrDistances;
+	NeighborSqrDistances.Reserve(m_GridDirections.Num());
+
+	uint32 NeighborIndex{};
 
 	for (const FIntPoint& Direction : m_GridDirections)
 	{
 		int32 Row{static_cast<int32>(RowFromIndex(Index) + Direction.X)};
 		int32 Col{static_cast<int32>(ColumnFromIndex(Index) + Direction.Y)};
 
-		// Check if valid
+		// Check if within bounds
 		if (Row >= 0 && Row < static_cast<int32>(m_Rows) &&
 			Col >= 0 && Col <  static_cast<int32>(m_Columns))
 		{
-			Neighbors.Add(CalculateIndex(Row, Col));
+			NeighborIndex = CalculateIndex(Row, Col);
+
+			// Avoid unnecessary calculations
+			if (m_GridCells[NeighborIndex]->Available())
+			{
+				const float DistanceSpr{static_cast<float>(FVector2D::DistSquared(Position, PositionFromIndex(NeighborIndex)))};
+				NeighborSqrDistances.Add({NeighborIndex, DistanceSpr});
+			}
+			else
+			{
+				NeighborSqrDistances.Add({NeighborIndex, FLT_MAX});
+			}
 		}
 	}
 
-	return Neighbors;
+	NeighborSqrDistances.Sort([](const std::pair<uint32, float>& A, const std::pair<uint32, float>& B)
+	{
+		// Sort by distance
+		return A.second < B.second;
+	});
+
+	for (const std::pair<uint32, float>&  Neighbor : NeighborSqrDistances)
+	{
+		NeighborsArr.Add(Neighbor.first);
+	}
 }

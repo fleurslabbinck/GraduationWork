@@ -4,9 +4,9 @@
 #include "UObject/Object.h"
 #include "StateBase.generated.h"
 
+class UCharacterMovementComponent;
 class UBehaviorTree;
 class AAIController;
-class APreyController;
 class UBlackboardComponent;
 
 UCLASS()
@@ -17,9 +17,9 @@ class PREYVSPREDATOR_API UStateBase : public UObject
 public:
 	void InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree);
 	
-	virtual void OnEnter(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent);
-	virtual void Update(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent, float DeltaTime);
-	virtual void OnExit(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent);
+	virtual void OnEnter(UBlackboardComponent* BlackboardComponent);
+	virtual void Update(UBlackboardComponent* BlackboardComponent, float DeltaTime);
+	virtual void OnExit(UBlackboardComponent* BlackboardComponent);
 
 protected:
 	UPROPERTY()
@@ -27,4 +27,9 @@ protected:
 	
 	UPROPERTY()
 	UBehaviorTree* m_BehaviorTree{nullptr};
+
+	UPROPERTY()
+	UCharacterMovementComponent* m_CharacterMovement{nullptr};
+
+	virtual void UpdateMaxSpeed();
 };

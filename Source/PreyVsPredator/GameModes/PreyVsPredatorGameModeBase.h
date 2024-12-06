@@ -14,5 +14,5 @@ class PREYVSPREDATOR_API APreyVsPredatorGameModeBase : public AGameModeBase
 
 protected:
 	virtual void BeginPlay() override;
-
+	virtual void Tick(float DeltaSeconds) override;
 };

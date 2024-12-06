@@ -19,6 +19,7 @@ public:
 	void SetCellClass(const TSubclassOf<UGridCell> CellClass);
 	void Initialize(const FVector& GridPosition, uint8 GridRows, uint8 GridColumns, float CellSize);
 
+	UGridCell* CurrentGridCell(const FVector& CurrentPosition) const;
 	UGridCell* NextGridCell(const FVector& CurrentPosition) const;
 
 private:
@@ -35,9 +36,9 @@ private:
 	uint32 RowFromIndex(uint32 Index) const;
 	uint32 ColumnFromIndex(uint32 Index) const;
 	
-	FVector PositionFromIndex(uint32 Index) const;
+	FVector2D PositionFromIndex(uint32 Index) const;
 	uint32 IndexFromPosition(const FVector2D& Position) const;
 	
 	uint32 ClosestCell(const FVector2D& Position) const;
-	TArray<uint32> ValidNeighbors(uint32 Index) const;
+	void ValidNeighbors(TArray<uint32>& NeighborsArr, const FVector2D& Position, uint32 Index) const;
 };

@@ -23,6 +23,9 @@ class PREYVSPREDATOR_API UWorldGridCell : public UGridCell
 	UPROPERTY(EditAnywhere, Category="Grid")
 	float RegenRate{0.01f};
 
+	UPROPERTY(EditAnywhere, Category="Grid")
+	float RegenTime{0.5f};
+
 public:
 	UWorldGridCell() = default;
 
@@ -35,6 +38,7 @@ public:
 
 private:
 	float m_Content{MaxContent};
+	FTimerHandle m_RegenTimer{};
 
 	void SetContents(float Rate);
 };

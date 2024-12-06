@@ -18,11 +18,28 @@ float UWorldGridCell::Content() const
 
 bool UWorldGridCell::Consume()
 {
-	const bool bHasContent{m_Content > 0};
-	
-	if (bHasContent)
+	if (m_Content > FLT_EPSILON)
 	{
-		SetContents(ConsumeRate);
+		float Rate;
+		
+		switch (Type)
+		{
+		case EWorldCellType::Grass:
+			Rate = ConsumeRate;
+			break;
+		default:
+			Rate = 0;
+			break;
+		}
+		
+		SetContents(Rate);
+
+		// Cell becomes unavailable and starts regenerating when no more content
+		if (m_Content < FLT_EPSILON)
+		{
+			SetAvailability(false);
+			Regenerate();
+		}
 	}
 	
 	return Available();
@@ -31,19 +48,19 @@ bool UWorldGridCell::Consume()
 void UWorldGridCell::Regenerate()
 {
 	SetContents(RegenRate);
+
+	// Regenerate as long as cell is not available and content not full
+	if (!Available() && m_Content < 1.f)
+	{
+		GetWorld()->GetTimerManager().SetTimer(m_RegenTimer, this, &UWorldGridCell::Regenerate, RegenTime);
+	}
+	else
+	{
+		SetAvailability(true);
+	}
 }
 
 void UWorldGridCell::SetContents(float Rate)
 {
 	m_Content = FMath::Clamp(m_Content + Rate, 0, MaxContent);
-
-	if (m_Content <= 0)
-	{
-		SetAvailability(false);
-	}
-
-	if (!Available() && m_Content >= 1)
-	{
-		SetAvailability(true);
-	}
 }

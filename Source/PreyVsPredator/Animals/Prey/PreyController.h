@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
 #include "PreyController.generated.h"
 
 class UBehaviorTree;
@@ -13,7 +14,7 @@ class UGrazingState;
 class UFiniteStateMachine;
 
 UCLASS()
-class PREYVSPREDATOR_API APreyController : public AAIController
+class PREYVSPREDATOR_API APreyController : public AAIController, public IAnimalControllerInterface
 {
 	GENERATED_BODY()
 
@@ -26,10 +27,15 @@ class PREYVSPREDATOR_API APreyController : public AAIController
 public:
 	APreyController();
 
+	virtual void SetTimer(const FTimerDelegate& Delegate, float InRate) override;
+	virtual void ResetTimer() override;
+
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	FTimerHandle m_Timer{};
+	
 	UPROPERTY()
 	UGrazingState* m_GrazingState;
 

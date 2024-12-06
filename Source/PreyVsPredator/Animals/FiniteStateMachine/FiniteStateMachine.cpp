@@ -47,7 +47,7 @@ void UFiniteStateMachine::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	// Update current state
 	if (m_CurrentState != nullptr)
 	{
-		m_CurrentState->Update(Cast<APreyController>(GetOwner()), BlackboardComponent, DeltaTime);
+		m_CurrentState->Update(BlackboardComponent, DeltaTime);
 	}
 }
 
@@ -83,7 +83,7 @@ void UFiniteStateMachine::ChangeState(UStateBase* NewState)
 	// Execute OnExit if currently in state
 	if (m_CurrentState != nullptr)
 	{
-		m_CurrentState->OnExit(Cast<APreyController>(GetOwner()), BlackboardComponent);
+		m_CurrentState->OnExit(BlackboardComponent);
 	}
 
 	// Change current state
@@ -92,6 +92,6 @@ void UFiniteStateMachine::ChangeState(UStateBase* NewState)
 	// Execute OnEnter of new state
 	if (m_CurrentState != nullptr)
 	{
-		m_CurrentState->OnEnter(Cast<APreyController>(GetOwner()), BlackboardComponent);
+		m_CurrentState->OnEnter(BlackboardComponent);
 	}
 }

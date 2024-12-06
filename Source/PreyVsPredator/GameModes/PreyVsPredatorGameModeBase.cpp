@@ -8,9 +8,10 @@ void APreyVsPredatorGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//UGrid* m_WorldGrid = NewObject<UGrid>(GetWorld(), UGrid::StaticClass());
-	////m_WorldGrid->SetCellClass(GridCellClass);
-	//m_WorldGrid->Initialize({}, 10, 10, 50.f);
-
 	GetWorld()->GetSubsystem<UWorldGridSubsystem>()->SetupGrid();
+}
+
+void APreyVsPredatorGameModeBase::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
 }

@@ -4,7 +4,6 @@
 #include "StateBase.h"
 #include "FlockingState.generated.h"
 
-class APreyController;
 
 UCLASS()
 class PREYVSPREDATOR_API UFlockingState : public UStateBase
@@ -13,8 +12,4 @@ class PREYVSPREDATOR_API UFlockingState : public UStateBase
 
 public:
 	UFlockingState() = default;
-	
-	virtual void OnEnter(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent) override;
-	virtual void Update(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent, float DeltaTime) override;
-	virtual void OnExit(APreyController* AIOwner, UBlackboardComponent* BlackboardComponent) override;
 };
