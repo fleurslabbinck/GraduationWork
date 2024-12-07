@@ -32,5 +32,6 @@ UENUM(BlueprintType)
 enum class EWorldCellType : uint8
 {
 	Grass UMETA(DisplayName="GRASS"),
-	Water UMETA(DisplayName="WATER")
+	Water UMETA(DisplayName="WATER"),
+	None UMETA(DisplayName="NONE")
 };

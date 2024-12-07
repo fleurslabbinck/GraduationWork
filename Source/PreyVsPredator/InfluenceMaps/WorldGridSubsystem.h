@@ -36,7 +36,7 @@ public:
 	void SetupGrid();
 	
 	float AcceptenceRadius() const;
-	UGridCell* NextGrassCell(const FVector& CurrentPosition) const;
+	FVector NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const;
 	bool AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const;
 
 private:

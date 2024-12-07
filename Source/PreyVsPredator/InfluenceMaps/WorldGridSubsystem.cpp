@@ -20,9 +20,15 @@ float UWorldGridSubsystem::AcceptenceRadius() const
 	return CellSize / AcceptenceDivisionFactor;
 }
 
-UGridCell* UWorldGridSubsystem::NextGrassCell(const FVector& CurrentPosition) const
+FVector UWorldGridSubsystem::NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const
 {
-	return m_WorldGrid->NextGridCell(CurrentPosition);
+	const UGridCell* NextGridCell{m_WorldGrid->NextGridCell(CurrentPosition, Type)};
+	if (NextGridCell == nullptr)
+	{
+		NextGridCell = m_WorldGrid->GridCellAtIndex(0);
+	}
+
+	return NextGridCell->CenterPosition();
 }
 
 bool UWorldGridSubsystem::AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const

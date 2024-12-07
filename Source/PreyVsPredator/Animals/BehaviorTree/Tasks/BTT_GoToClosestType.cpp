@@ -1,16 +1,16 @@
-﻿#include "BTT_GoToClosestGrassPatch.h"
+﻿#include "BTT_GoToClosestType.h"
 
 #include "AIController.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h"
 
 
-UBTT_GoToClosestGrassPatch::UBTT_GoToClosestGrassPatch()
+UBTT_GoToClosestType::UBTT_GoToClosestType()
 {
 	bNotifyTick = true;
 }
 
-EBTNodeResult::Type UBTT_GoToClosestGrassPatch::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTT_GoToClosestType::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	AAIController* Controller{OwnerComp.GetAIOwner()};
 	if (Controller == nullptr) return EBTNodeResult::Aborted;
@@ -19,10 +19,7 @@ EBTNodeResult::Type UBTT_GoToClosestGrassPatch::ExecuteTask(UBehaviorTreeCompone
 
 	// Get next grass patch from world grid
 	const FVector CurrentPosition{Controller->GetPawn()->GetActorLocation()};
-	const UGridCell* GrassPatchCell{WorldGrid->NextGrassCell(CurrentPosition)};
-	if (GrassPatchCell == nullptr) return EBTNodeResult::Aborted;
-	
-	const FVector GrassPatchLocation{GrassPatchCell->CenterPosition()};
+	const FVector GrassPatchLocation{WorldGrid->NextCellPosition(CurrentPosition, TargetType)};
 
 	// Move pawn towards closest available grass patch
 	const EPathFollowingRequestResult::Type Result{Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptenceRadius())};
@@ -34,7 +31,7 @@ EBTNodeResult::Type UBTT_GoToClosestGrassPatch::ExecuteTask(UBehaviorTreeCompone
 	return EBTNodeResult::InProgress;
 }
 
-void UBTT_GoToClosestGrassPatch::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
+void UBTT_GoToClosestType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	AAIController* Controller{OwnerComp.GetAIOwner()};
 	if (Controller == nullptr) FinishLatentAbort(OwnerComp);

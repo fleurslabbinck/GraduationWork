@@ -3,23 +3,24 @@
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
 #include "PreyVsPredator/InfluenceMaps/GridData.h"
-#include "BTT_EatGrass.generated.h"
+#include "BTT_ConsumeType.generated.h"
 
 
 UCLASS()
-class PREYVSPREDATOR_API UBTT_EatGrass : public UBTTask_BlackboardBase
+class PREYVSPREDATOR_API UBTT_ConsumeType : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Task")
+	UPROPERTY(EditAnywhere, Category="Params")
+	EWorldCellType TargetType{EWorldCellType::Grass};
+
+	UPROPERTY(EditAnywhere, Category="Params")
 	float EatTime{1.f};
 
 public:
-	UBTT_EatGrass();
+	UBTT_ConsumeType();
 
 private:
-	const EWorldCellType m_GrassType{EWorldCellType::Grass};
-	
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 	UFUNCTION()

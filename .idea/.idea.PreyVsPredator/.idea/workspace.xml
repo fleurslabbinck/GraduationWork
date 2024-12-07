@@ -8,29 +8,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb1db2a9-dc43-4ac1-abeb-8d78f1b6cf55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PreyVsPredator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PreyVsPredator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/BP_Boar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/BP_Boar.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/Test.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Test.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_EatGrass.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_EatGrass.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_EatGrass.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_EatGrass.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestGrassPatch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestGrassPatch.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestGrassPatch.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestGrassPatch.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/Prey/PreyController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/Prey/PreyController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/Prey/PreyController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/Prey/PreyController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/GameModes/PreyVsPredatorGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/GameModes/PreyVsPredatorGameModeBase.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/GameModes/PreyVsPredatorGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/GameModes/PreyVsPredatorGameModeBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/AI/BT_Grazing.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/AI/BT_Grazing.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_EatGrass.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_ConsumeType.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_EatGrass.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_ConsumeType.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestGrassPatch.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestType.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestGrassPatch.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestType.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/Grid.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/Grid.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/Grid.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/Grid.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridCell.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridCell.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridCell.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridCell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/GridData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/GridData.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridSubsystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridSubsystem.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h" afterDir="false" />
     </list>
@@ -43,103 +30,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -277,7 +167,8 @@
       <workItem from="1732279900418" duration="17477000" />
       <workItem from="1732372225206" duration="10691000" />
       <workItem from="1732967582171" duration="11978000" />
-      <workItem from="1733485624465" duration="17220000" />
+      <workItem from="1733485624465" duration="17288000" />
+      <workItem from="1733579453929" duration="4223000" />
     </task>
     <servers />
   </component>

@@ -20,7 +20,8 @@ public:
 	void Initialize(const FVector& GridPosition, uint8 GridRows, uint8 GridColumns, float CellSize);
 
 	UGridCell* CurrentGridCell(const FVector& CurrentPosition) const;
-	UGridCell* NextGridCell(const FVector& CurrentPosition) const;
+	UGridCell* NextGridCell(const FVector& CurrentPosition, EWorldCellType Type = EWorldCellType::None) const;
+	UGridCell* GridCellAtIndex(uint32 Index) const;
 
 private:
 	uint32 m_Rows{};
@@ -39,6 +40,7 @@ private:
 	FVector2D PositionFromIndex(uint32 Index) const;
 	uint32 IndexFromPosition(const FVector2D& Position) const;
 	
-	uint32 ClosestCell(const FVector2D& Position) const;
-	void ValidNeighbors(TArray<uint32>& NeighborsArr, const FVector2D& Position, uint32 Index) const;
+	uint32 ClosestCell(const FVector2D& Position, EWorldCellType Type) const;
+	void ValidNeighbors(TArray<uint32>& NeighborsArr, const FVector2D& Position, uint32 Index, EWorldCellType Type) const;
+	bool IsCellTypeValid(uint32 Index, EWorldCellType Type) const;
 };

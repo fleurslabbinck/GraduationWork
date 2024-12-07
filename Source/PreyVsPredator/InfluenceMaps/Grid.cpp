@@ -1,6 +1,7 @@
 ﻿#include "Grid.h"
 
 #include "GridCell.h"
+#include "WorldGridCell.h"
 
 UGrid::UGrid()
 {
@@ -55,14 +56,24 @@ UGridCell* UGrid::CurrentGridCell(const FVector& CurrentPosition) const
 	return CurrentCellIndex != INDEX_NONE ? m_GridCells[CurrentCellIndex] : nullptr;
 }
 
-UGridCell* UGrid::NextGridCell(const FVector& CurrentPosition) const
+UGridCell* UGrid::NextGridCell(const FVector& CurrentPosition, EWorldCellType Type) const
 {
 	// Get the closest cell based on position (2D)
 	const FVector2D CurrentPosition2D{CurrentPosition.X, CurrentPosition.Y};
-	const uint32 ClosestCellIndex{ClosestCell(CurrentPosition2D)};
+	const uint32 ClosestCellIndex{ClosestCell(CurrentPosition2D, Type)};
 
 	// return gridcell if valid index
 	return ClosestCellIndex != INDEX_NONE ? m_GridCells[ClosestCellIndex] : nullptr;
+}
+
+UGridCell* UGrid::GridCellAtIndex(uint32 Index) const
+{
+	if (Index < static_cast<uint32>(m_GridCells.Num()))
+	{
+		return m_GridCells[Index];
+	}
+
+	return nullptr;
 }
 
 uint32 UGrid::CalculateIndex(uint32 Row, uint32 Column) const
@@ -95,7 +106,7 @@ uint32 UGrid::IndexFromPosition(const FVector2D& Position) const
 	return Index < static_cast<uint32>(m_GridCells.Num()) ? Index : INDEX_NONE;
 }
 
-uint32 UGrid::ClosestCell(const FVector2D& Position) const
+uint32 UGrid::ClosestCell(const FVector2D& Position, EWorldCellType Type) const
 {
 	const uint32 StartIndex{IndexFromPosition(Position)};
 	if (StartIndex == INDEX_NONE || StartIndex >= static_cast<uint32>(m_GridCells.Num())) return INDEX_NONE;
@@ -115,14 +126,14 @@ uint32 UGrid::ClosestCell(const FVector2D& Position) const
 		Queue.Dequeue(CurrentIndex);
 
 		// Check if cell is available
-		if (m_GridCells[CurrentIndex]->Available())
+		if (m_GridCells[CurrentIndex]->Available() && IsCellTypeValid(CurrentIndex, Type))
 		{
 			return CurrentIndex;
 		}
 
 		// Add neighbors to queue
 		Neighbors.Empty();
-		ValidNeighbors(Neighbors, Position, CurrentIndex);
+		ValidNeighbors(Neighbors, Position, CurrentIndex, Type);
 		
 		for (const uint32 Index : Neighbors)
 		{
@@ -137,7 +148,7 @@ uint32 UGrid::ClosestCell(const FVector2D& Position) const
 	return INDEX_NONE;
 }
 
-void UGrid::ValidNeighbors(TArray<uint32>& NeighborsArr, const FVector2D& Position, uint32 Index) const
+void UGrid::ValidNeighbors(TArray<uint32>& NeighborsArr, const FVector2D& Position, uint32 Index, EWorldCellType Type) const
 {
 	TArray<std::pair<uint32, float>> NeighborSqrDistances;
 	NeighborSqrDistances.Reserve(m_GridDirections.Num());
@@ -156,7 +167,7 @@ void UGrid::ValidNeighbors(TArray<uint32>& NeighborsArr, const FVector2D& Positi
 			NeighborIndex = CalculateIndex(Row, Col);
 
 			// Avoid unnecessary calculations
-			if (m_GridCells[NeighborIndex]->Available())
+			if (m_GridCells[NeighborIndex]->Available() && IsCellTypeValid(Index, Type))
 			{
 				const float DistanceSpr{static_cast<float>(FVector2D::DistSquared(Position, PositionFromIndex(NeighborIndex)))};
 				NeighborSqrDistances.Add({NeighborIndex, DistanceSpr});
@@ -178,4 +189,25 @@ void UGrid::ValidNeighbors(TArray<uint32>& NeighborsArr, const FVector2D& Positi
 	{
 		NeighborsArr.Add(Neighbor.first);
 	}
+}
+
+bool UGrid::IsCellTypeValid(uint32 Index, EWorldCellType Type) const
+{
+	switch (Type)
+	{
+	case EWorldCellType::None:
+		return true;
+		break;
+	default:
+		{
+			UWorldGridCell* WorldGridCell{Cast<UWorldGridCell>(m_GridCells[Index])};
+			if (WorldGridCell != nullptr)
+			{
+				return Type == WorldGridCell->WorldType();
+			}
+			break;
+		}
+	}
+
+	return false;
 }
