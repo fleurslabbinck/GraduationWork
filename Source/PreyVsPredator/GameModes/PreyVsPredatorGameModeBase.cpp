@@ -1,6 +1,5 @@
 #include "PreyVsPredatorGameModeBase.h"
 
-#include "PreyVsPredator/InfluenceMaps/Grid.h"
 #include "PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h"
 
 
@@ -8,7 +7,8 @@ void APreyVsPredatorGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetWorld()->GetSubsystem<UWorldGridSubsystem>()->SetupGrid();
+	checkf(WorldGridCellClass != nullptr, TEXT("World Grid Cell Class not assigned"));
+	GetWorld()->GetSubsystem<UWorldGridSubsystem>()->SetupGrid(WorldGridCellClass);
 }
 
 void APreyVsPredatorGameModeBase::Tick(float DeltaSeconds)

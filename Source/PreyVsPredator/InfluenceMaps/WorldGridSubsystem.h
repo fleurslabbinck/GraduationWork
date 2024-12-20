@@ -15,9 +15,6 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	TSubclassOf<UGridCell> GridCellClass{UWorldGridCell::StaticClass()};
-
-	UPROPERTY(EditAnywhere, Category="Grid")
 	FVector StartPosition{};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
@@ -30,12 +27,12 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 	float CellSize{200.f};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	float AcceptenceDivisionFactor{5.f};
+	float AcceptanceDivisionFactor{5.f};
 
 public:
-	void SetupGrid();
+	void SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass);
 	
-	float AcceptenceRadius() const;
+	float AcceptanceRadius() const;
 	FVector NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const;
 	bool AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const;
 

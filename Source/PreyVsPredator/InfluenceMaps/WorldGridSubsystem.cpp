@@ -3,21 +3,21 @@
 #include "Grid.h"
 
 
-void UWorldGridSubsystem::SetupGrid()
+void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass)
 {
 	// Create grid object
 	m_WorldGrid = NewObject<UGrid>(GetWorld(), UGrid::StaticClass());
 
 	// Set cell type to world grid cell
-	m_WorldGrid->SetCellClass(GridCellClass);
+	m_WorldGrid->SetCellClass(WorldGridCellClass);
 
 	// Fill grid with world grid cells
 	m_WorldGrid->Initialize(StartPosition, Rows, Columns, CellSize);
 }
 
-float UWorldGridSubsystem::AcceptenceRadius() const
+float UWorldGridSubsystem::AcceptanceRadius() const
 {
-	return CellSize / AcceptenceDivisionFactor;
+	return CellSize / AcceptanceDivisionFactor;
 }
 
 FVector UWorldGridSubsystem::NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const

@@ -22,7 +22,7 @@ EBTNodeResult::Type UBTT_GoToClosestType::ExecuteTask(UBehaviorTreeComponent& Ow
 	const FVector GrassPatchLocation{WorldGrid->NextCellPosition(CurrentPosition, TargetType)};
 
 	// Move pawn towards closest available grass patch
-	const EPathFollowingRequestResult::Type Result{Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptenceRadius())};
+	const EPathFollowingRequestResult::Type Result{Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptanceRadius())};
 	if (Result == EPathFollowingRequestResult::Failed)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, TEXT("Failed"));

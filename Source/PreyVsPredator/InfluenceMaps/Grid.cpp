@@ -25,7 +25,6 @@ void UGrid::Initialize(const FVector& GridPosition, uint8 GridRows, uint8 GridCo
 	m_GridCells.Empty();
 
 	// Starting bottom left
-	FVector Pos{};
 	UGridCell* Cell{};
 
 	for (uint16 Row{}; Row < m_Rows; ++Row)
@@ -33,6 +32,7 @@ void UGrid::Initialize(const FVector& GridPosition, uint8 GridRows, uint8 GridCo
 		for (uint16 Column{}; Column < m_Columns; ++Column)
 		{
 			// Set position
+			FVector Pos;
 			Pos.X = GridPosition.X + Row * CellSize;
 			Pos.Y = GridPosition.Y + Column * CellSize;
 			Pos.Z = GridPosition.Z;
