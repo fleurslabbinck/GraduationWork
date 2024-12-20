@@ -48,6 +48,11 @@ void UGrid::Initialize(const FVector& GridPosition, uint8 GridRows, uint8 GridCo
 	}
 }
 
+uint32 UGrid::TotalCells() const
+{
+	return m_GridCells.Num();
+}
+
 UGridCell* UGrid::CurrentGridCell(const FVector& CurrentPosition) const
 {
 	const FVector2D CurrentPosition2D{CurrentPosition.X, CurrentPosition.Y};

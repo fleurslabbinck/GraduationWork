@@ -13,6 +13,15 @@ void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellCla
 
 	// Fill grid with world grid cells
 	m_WorldGrid->Initialize(StartPosition, Rows, Columns, CellSize);
+
+	const uint32 TotalCells{m_WorldGrid->TotalCells()};
+
+	// Assign water cells
+	MakePond(0);
+	MakePond(Rows - 1);
+	MakePond(TotalCells / 2 + Rows / 2);
+	MakePond(TotalCells - Rows);
+	MakePond(TotalCells - 1);
 }
 
 float UWorldGridSubsystem::AcceptanceRadius() const
@@ -46,4 +55,18 @@ bool UWorldGridSubsystem::AttemptConsumption(const FVector& CurrentPosition, EWo
 	}
 
 	return false;
+}
+
+UWorldGridCell* UWorldGridSubsystem::CellAtPosition(const FVector& Pos) const
+{
+	return Cast<UWorldGridCell>(m_WorldGrid->CurrentGridCell(Pos));
+}
+
+void UWorldGridSubsystem::MakePond(uint32 Index) const
+{
+	UWorldGridCell* Cell{Cast<UWorldGridCell>(m_WorldGrid->GridCellAtIndex(Index))};
+	if (Cell != nullptr)
+	{
+		Cell->ChangeWorldType(EWorldCellType::Water);
+	}
 }

@@ -12,32 +12,51 @@ UBTT_GoToClosestType::UBTT_GoToClosestType()
 
 EBTNodeResult::Type UBTT_GoToClosestType::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	AAIController* Controller{OwnerComp.GetAIOwner()};
-	if (Controller == nullptr) return EBTNodeResult::Aborted;
+	if (MoveToClosestTarget(OwnerComp)) return EBTNodeResult::InProgress;
+	return EBTNodeResult::Aborted;
+}
 
-	UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
+bool UBTT_GoToClosestType::MoveToClosestTarget(const UBehaviorTreeComponent& OwnerComp) const
+{
+	bool bSuccess{false};
 
-	// Get next grass patch from world grid
-	const FVector CurrentPosition{Controller->GetPawn()->GetActorLocation()};
-	const FVector GrassPatchLocation{WorldGrid->NextCellPosition(CurrentPosition, TargetType)};
-
-	// Move pawn towards closest available grass patch
-	const EPathFollowingRequestResult::Type Result{Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptanceRadius())};
-	if (Result == EPathFollowingRequestResult::Failed)
+	if (AAIController* Controller{OwnerComp.GetAIOwner()}; Controller != nullptr)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, TEXT("Failed"));
+		UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
+
+		// Get next target type cell from world grid
+		const FVector CurrentPosition{Controller->GetPawn()->GetActorLocation()};
+		const FVector GrassPatchLocation{WorldGrid->NextCellPosition(CurrentPosition, TargetType)};
+
+		// Move pawn towards closest available target type cell
+		bSuccess = Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptanceRadius()) != EPathFollowingRequestResult::Failed;
 	}
-	
-	return EBTNodeResult::InProgress;
+
+	return bSuccess;
 }
 
 void UBTT_GoToClosestType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
-	AAIController* Controller{OwnerComp.GetAIOwner()};
+	const AAIController* Controller{OwnerComp.GetAIOwner()};
 	if (Controller == nullptr) FinishLatentAbort(OwnerComp);
 
 	if (Controller->GetMoveStatus() == EPathFollowingStatus::Type::Idle)
 	{
-		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+		const UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
+		const UWorldGridCell* CurrentCell{WorldGrid->CellAtPosition(Controller->GetPawn()->GetActorLocation())};
+		if (CurrentCell != nullptr)
+		{
+			// if cell has target type, succeed
+			if (CurrentCell->WorldType() == TargetType && CurrentCell->Available())
+			{
+				FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+				return;
+			}
+		}
+
+		if (!MoveToClosestTarget(OwnerComp))
+		{
+			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+		}
 	}
 }

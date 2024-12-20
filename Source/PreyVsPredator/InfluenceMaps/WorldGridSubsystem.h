@@ -31,12 +31,15 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 
 public:
 	void SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass);
-	
+
 	float AcceptanceRadius() const;
 	FVector NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const;
 	bool AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const;
+	UWorldGridCell* CellAtPosition(const FVector& Pos) const;
 
 private:
 	UPROPERTY()
 	UGrid* m_WorldGrid{nullptr};
+
+	void MakePond(uint32 Index) const;
 };

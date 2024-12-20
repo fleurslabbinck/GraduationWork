@@ -35,10 +35,10 @@ class PREYVSPREDATOR_API UWorldGridCell : public UGridCell
 	float MaxContent{1.f};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	float ConsumeRate{-0.1f};
+	float ConsumeRate{-0.05f};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	float RegenRate{0.01f};
+	float RegenRate{0.001f};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
 	float RegenTime{0.5f};
