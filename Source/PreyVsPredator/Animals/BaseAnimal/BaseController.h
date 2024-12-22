@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
-#include "PreyController.generated.h"
+#include "BaseController.generated.h"
 
 class UBehaviorTree;
 class UTestCondition;
@@ -14,7 +14,7 @@ class UGrazingState;
 class UFiniteStateMachine;
 
 UCLASS()
-class PREYVSPREDATOR_API APreyController : public AAIController, public IAnimalControllerInterface
+class PREYVSPREDATOR_API ABaseController : public AAIController, public IAnimalControllerInterface
 {
 	GENERATED_BODY()
 
@@ -25,7 +25,7 @@ class PREYVSPREDATOR_API APreyController : public AAIController, public IAnimalC
 	UBehaviorTree* GrazingBehaviorTree;
 	
 public:
-	APreyController();
+	ABaseController();
 
 	virtual void SetTimer(const FTimerDelegate& Delegate, float InRate) override;
 	virtual void ResetTimer() override;

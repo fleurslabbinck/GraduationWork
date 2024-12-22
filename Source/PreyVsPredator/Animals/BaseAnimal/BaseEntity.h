@@ -2,14 +2,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Prey.generated.h"
+#include "BaseEntity.generated.h"
 
 class UBehaviorTree;
 class UArrowComponent;
 class UCapsuleComponent;
 
 UCLASS()
-class PREYVSPREDATOR_API APrey : public ACharacter
+class PREYVSPREDATOR_API ABaseEntity : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -23,7 +23,7 @@ class PREYVSPREDATOR_API APrey : public ACharacter
 	float Acceleration{1500.f};
 
 public:
-	APrey();
+	ABaseEntity();
 
 protected:
 	virtual void BeginPlay() override;

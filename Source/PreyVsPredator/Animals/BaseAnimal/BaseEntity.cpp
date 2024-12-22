@@ -1,10 +1,10 @@
-﻿#include "Prey.h"
+﻿#include "BaseEntity.h"
 
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
-APrey::APrey()
+ABaseEntity::ABaseEntity()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -18,12 +18,12 @@ APrey::APrey()
 	CharacterMovementComponent->bOrientRotationToMovement = true;
 }
 
-void APrey::BeginPlay()
+void ABaseEntity::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void APrey::Tick(float DeltaTime)
+void ABaseEntity::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }

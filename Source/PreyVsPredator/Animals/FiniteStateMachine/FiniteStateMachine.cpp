@@ -2,7 +2,6 @@
 
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Conditions/ConditionBase.h"
-#include "PreyVsPredator/Animals/Prey/PreyController.h"
 #include "States/StateBase.h"
 
 

@@ -1,7 +1,7 @@
 ﻿#include "BTT_ConsumeType.h"
 
 #include "AIController.h"
-#include "PreyVsPredator/Animals/Prey/PreyController.h"
+#include "PreyVsPredator/Animals/BaseAnimal/BaseController.h"
 #include "PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h"
 
 
@@ -19,15 +19,15 @@ EBTNodeResult::Type UBTT_ConsumeType::ExecuteTask(UBehaviorTreeComponent& OwnerC
 
 void UBTT_ConsumeType::EatGrass(UBehaviorTreeComponent* OwnerComp)
 {
-	APreyController* PreyController{Cast<APreyController>(OwnerComp->GetAIOwner())};
-	if (PreyController == nullptr) return FinishLatentAbort(*OwnerComp);
+	ABaseController* BaseController{Cast<ABaseController>(OwnerComp->GetAIOwner())};
+	if (BaseController == nullptr) return FinishLatentAbort(*OwnerComp);
 	
 	// Try to eat grass
-	const FVector CurrentPosition{PreyController->GetPawn()->GetActorLocation()};
+	const FVector CurrentPosition{BaseController->GetPawn()->GetActorLocation()};
 	if (GetWorld()->GetSubsystem<UWorldGridSubsystem>()->AttemptConsumption(CurrentPosition, TargetType))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Consuming Grass"));
-		PreyController->SetTimer(FTimerDelegate::CreateUObject(this, &UBTT_ConsumeType::EatGrass, OwnerComp), EatTime);
+		BaseController->SetTimer(FTimerDelegate::CreateUObject(this, &UBTT_ConsumeType::EatGrass, OwnerComp), EatTime);
 	}
 	else
 	{

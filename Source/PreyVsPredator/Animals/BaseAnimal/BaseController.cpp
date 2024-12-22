@@ -1,4 +1,4 @@
-﻿#include "PreyController.h"
+﻿#include "BaseController.h"
 
 #include "PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/TestCondition.h"
@@ -6,7 +6,7 @@
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h"
 
 
-APreyController::APreyController()
+ABaseController::ABaseController()
 {
 	PrimaryActorTick.bCanEverTick = false;
 	
@@ -20,17 +20,17 @@ APreyController::APreyController()
 	m_TestCondition = CreateDefaultSubobject<UTestCondition>("Test Condition");
 }
 
-void APreyController::SetTimer(const FTimerDelegate& Delegate, float InRate)
+void ABaseController::SetTimer(const FTimerDelegate& Delegate, float InRate)
 {
 	GetWorld()->GetTimerManager().SetTimer(m_Timer, Delegate, InRate, false);
 }
 
-void APreyController::ResetTimer()
+void ABaseController::ResetTimer()
 {
 	GetWorld()->GetTimerManager().ClearTimer(m_Timer);
 }
 
-void APreyController::BeginPlay()
+void ABaseController::BeginPlay()
 {
 	Super::BeginPlay();
 
