@@ -12,4 +12,6 @@ class PREYVSPREDATOR_API UFlockingState : public UStateBase
 
 public:
 	UFlockingState() = default;
+
+	virtual void OnEnter(UBlackboardComponent* BlackboardComponent) override;
 };

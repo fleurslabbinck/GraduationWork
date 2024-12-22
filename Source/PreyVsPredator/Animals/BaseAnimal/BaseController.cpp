@@ -1,7 +1,7 @@
 ﻿#include "BaseController.h"
 
 #include "PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.h"
-#include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/TestCondition.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/ToFlockingState.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h"
 
@@ -13,11 +13,24 @@ ABaseController::ABaseController()
 	FiniteStateMachine = CreateDefaultSubobject<UFiniteStateMachine>("Finite State Machine");
 
 	// Create states
-	m_GrazingState = CreateDefaultSubobject<UGrazingState>("Grazing State");
-	m_FlockingState = CreateDefaultSubobject<UFlockingState>("Flocking State");
+	m_GrazingState = NewObject<UGrazingState>();
+	m_FlockingState = NewObject<UFlockingState>();
 
 	// Create conditions
-	m_TestCondition = CreateDefaultSubobject<UTestCondition>("Test Condition");
+	m_ToFlockingState = NewObject<UToFlockingState>();
+}
+
+void ABaseController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// Set Behavior Tree classes
+	m_GrazingState->InitializeState(this, GrazingBehaviorTree);
+	m_FlockingState->InitializeState(this, FlockingBehaviorTree);
+
+	// Create transitions
+	FiniteStateMachine->SetStartState(m_GrazingState);
+	FiniteStateMachine->AddTransition(m_GrazingState, m_FlockingState, m_ToFlockingState);
 }
 
 void ABaseController::SetTimer(const FTimerDelegate& Delegate, float InRate)
@@ -28,16 +41,4 @@ void ABaseController::SetTimer(const FTimerDelegate& Delegate, float InRate)
 void ABaseController::ResetTimer()
 {
 	GetWorld()->GetTimerManager().ClearTimer(m_Timer);
-}
-
-void ABaseController::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// Set Behavior Tree classes
-	m_GrazingState->InitializeState(this, GrazingBehaviorTree);
-
-	// Create transitions
-	FiniteStateMachine->SetStartState(m_GrazingState);
-	FiniteStateMachine->AddTransition(m_GrazingState, m_FlockingState, m_TestCondition);
 }

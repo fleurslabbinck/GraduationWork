@@ -7,8 +7,8 @@
 #include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
 #include "BaseController.generated.h"
 
+class UToFlockingState;
 class UBehaviorTree;
-class UTestCondition;
 class UFlockingState;
 class UGrazingState;
 class UFiniteStateMachine;
@@ -23,6 +23,9 @@ class PREYVSPREDATOR_API ABaseController : public AAIController, public IAnimalC
 
 	UPROPERTY(EditAnywhere, Category="Behavior Trees")
 	UBehaviorTree* GrazingBehaviorTree;
+
+	UPROPERTY(EditAnywhere, Category="Behavior Trees")
+	UBehaviorTree* FlockingBehaviorTree;
 	
 public:
 	ABaseController();
@@ -43,5 +46,5 @@ private:
 	UFlockingState* m_FlockingState;
 
 	UPROPERTY()
-	UTestCondition* m_TestCondition;
+	UToFlockingState* m_ToFlockingState;
 };
