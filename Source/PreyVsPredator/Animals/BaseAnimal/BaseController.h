@@ -7,7 +7,7 @@
 #include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
 #include "BaseController.generated.h"
 
-class UToFlockingState;
+class UFlockOutOfReachCondition;
 class UBehaviorTree;
 class UFlockingState;
 class UGrazingState;
@@ -46,5 +46,5 @@ private:
 	UFlockingState* m_FlockingState;
 
 	UPROPERTY()
-	UToFlockingState* m_ToFlockingState;
+	UFlockOutOfReachCondition* m_FlockOutOfReachCondition;
 };

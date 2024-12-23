@@ -1,11 +1,11 @@
-﻿#include "ToFlockingState.h"
+﻿#include "FlockOutOfReachCondition.h"
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
 
 
-bool UToFlockingState::Evaluate(UBlackboardComponent* BlackboardComponent) const
+bool UFlockOutOfReachCondition::Evaluate(UBlackboardComponent* BlackboardComponent) const
 {
 	bool ShouldFlock{false};
 	

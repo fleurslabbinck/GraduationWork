@@ -1,7 +1,7 @@
 ﻿#include "BaseController.h"
 
 #include "PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.h"
-#include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/ToFlockingState.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/FlockOutOfReachCondition.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h"
 
@@ -17,7 +17,7 @@ ABaseController::ABaseController()
 	m_FlockingState = NewObject<UFlockingState>();
 
 	// Create conditions
-	m_ToFlockingState = NewObject<UToFlockingState>();
+	m_FlockOutOfReachCondition = NewObject<UFlockOutOfReachCondition>();
 }
 
 void ABaseController::BeginPlay()
@@ -30,7 +30,7 @@ void ABaseController::BeginPlay()
 
 	// Create transitions
 	FiniteStateMachine->SetStartState(m_GrazingState);
-	FiniteStateMachine->AddTransition(m_GrazingState, m_FlockingState, m_ToFlockingState);
+	FiniteStateMachine->AddTransition(m_GrazingState, m_FlockingState, m_FlockOutOfReachCondition);
 }
 
 void ABaseController::SetTimer(const FTimerDelegate& Delegate, float InRate)

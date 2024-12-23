@@ -2,16 +2,16 @@
 
 #include "CoreMinimal.h"
 #include "ConditionBase.h"
-#include "ToFlockingState.generated.h"
+#include "FlockOutOfReachCondition.generated.h"
 
 
 UCLASS()
-class PREYVSPREDATOR_API UToFlockingState : public UConditionBase
+class PREYVSPREDATOR_API UFlockOutOfReachCondition : public UConditionBase
 {
 	GENERATED_BODY()
 
 public:
-	UToFlockingState() = default;
+	UFlockOutOfReachCondition() = default;
 	
 	virtual bool Evaluate(UBlackboardComponent* BlackboardComponent) const override;
 };
