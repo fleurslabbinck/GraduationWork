@@ -7,6 +7,8 @@
 #include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
 #include "BaseController.generated.h"
 
+class UThirstyCondition;
+class UHydratingState;
 class UFlockOutOfReachCondition;
 class UBehaviorTree;
 class UFlockingState;
@@ -26,6 +28,9 @@ class PREYVSPREDATOR_API ABaseController : public AAIController, public IAnimalC
 
 	UPROPERTY(EditAnywhere, Category="Behavior Trees")
 	UBehaviorTree* FlockingBehaviorTree;
+
+	UPROPERTY(EditAnywhere, Category="Behavior Trees")
+	UBehaviorTree* HydratingBehaviorTree;
 	
 public:
 	ABaseController();
@@ -43,7 +48,13 @@ private:
 	UGrazingState* m_GrazingState;
 
 	UPROPERTY()
+	UHydratingState* m_HydratingState;
+
+	UPROPERTY()
 	UFlockingState* m_FlockingState;
+
+	UPROPERTY()
+	UThirstyCondition* m_ThirstyCondition;
 
 	UPROPERTY()
 	UFlockOutOfReachCondition* m_FlockOutOfReachCondition;

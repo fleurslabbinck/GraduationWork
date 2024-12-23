@@ -2,20 +2,20 @@
 
 #include "CoreMinimal.h"
 #include "StateBase.h"
-#include "GrazingState.generated.h"
+#include "HydratingState.generated.h"
 
 
 UCLASS()
-class PREYVSPREDATOR_API UGrazingState : public UStateBase
+class PREYVSPREDATOR_API UHydratingState : public UStateBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Grazing")
-	float GrazingSpeed{100.f};
+	UPROPERTY(EditAnywhere, Category="Hydrating")
+	float HydratingSpeed{300.f};
 
 public:
-	UGrazingState() = default;
-	
+	UHydratingState() = default;
+
 	virtual void OnEnter(UBlackboardComponent* BlackboardComponent) override;
 
 protected:

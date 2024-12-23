@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
 
 void UStateBase::InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree)
@@ -43,5 +44,6 @@ void UStateBase::OnExit(UBlackboardComponent* BlackboardComponent)
 
 void UStateBase::UpdateMaxSpeed()
 {
-	
+	if (m_CharacterMovement == nullptr) return;
+	m_CharacterMovement->MaxWalkSpeed = MaxSpeed;
 }

@@ -10,16 +10,8 @@ void UGrazingState::OnEnter(UBlackboardComponent* BlackboardComponent)
 	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Grazing State"));
 }
 
-void UGrazingState::OnExit(UBlackboardComponent* BlackboardComponent)
-{
-	Super::OnExit(BlackboardComponent);
-
-	
-}
-
 void UGrazingState::UpdateMaxSpeed()
 {
 	if (m_CharacterMovement == nullptr) return;
-
 	m_CharacterMovement->MaxWalkSpeed = GrazingSpeed;
 }

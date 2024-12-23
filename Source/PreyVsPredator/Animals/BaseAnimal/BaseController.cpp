@@ -2,8 +2,10 @@
 
 #include "PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/FlockOutOfReachCondition.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/ThirstyCondition.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/States/HydratingState.h"
 
 
 ABaseController::ABaseController()
@@ -11,25 +13,30 @@ ABaseController::ABaseController()
 	PrimaryActorTick.bCanEverTick = false;
 	
 	FiniteStateMachine = CreateDefaultSubobject<UFiniteStateMachine>("Finite State Machine");
-
-	// Create states
-	m_GrazingState = NewObject<UGrazingState>();
-	m_FlockingState = NewObject<UFlockingState>();
-
-	// Create conditions
-	m_FlockOutOfReachCondition = NewObject<UFlockOutOfReachCondition>();
 }
 
 void ABaseController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Create states
+	m_GrazingState = NewObject<UGrazingState>();
+	m_HydratingState = NewObject<UHydratingState>();
+	m_FlockingState = NewObject<UFlockingState>();
+
+	// Create conditions
+	m_ThirstyCondition = NewObject<UThirstyCondition>();
+	m_FlockOutOfReachCondition = NewObject<UFlockOutOfReachCondition>();
+
 	// Set Behavior Tree classes
 	m_GrazingState->InitializeState(this, GrazingBehaviorTree);
+	m_HydratingState->InitializeState(this, HydratingBehaviorTree);
 	m_FlockingState->InitializeState(this, FlockingBehaviorTree);
 
 	// Create transitions
 	FiniteStateMachine->SetStartState(m_GrazingState);
+	FiniteStateMachine->AddTransition(m_GrazingState, m_HydratingState, m_ThirstyCondition);
+	FiniteStateMachine->AddTransition(m_FlockingState, m_HydratingState, m_ThirstyCondition);
 	FiniteStateMachine->AddTransition(m_GrazingState, m_FlockingState, m_FlockOutOfReachCondition);
 }
 

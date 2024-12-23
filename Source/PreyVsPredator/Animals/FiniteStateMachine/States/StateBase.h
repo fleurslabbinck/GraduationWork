@@ -14,6 +14,9 @@ class PREYVSPREDATOR_API UStateBase : public UObject
 {
 	GENERATED_BODY()
 
+	UPROPERTY(EditAnywhere, Category="Base")
+	float MaxSpeed{600.f};
+
 public:
 	void InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree);
 	

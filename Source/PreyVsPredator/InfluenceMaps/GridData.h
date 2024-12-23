@@ -33,5 +33,6 @@ enum class EWorldCellType : uint8
 {
 	Grass UMETA(DisplayName="GRASS"),
 	Water UMETA(DisplayName="WATER"),
+	Carcass UMETA(DisplayName="CARCASS"),
 	None UMETA(DisplayName="NONE")
 };

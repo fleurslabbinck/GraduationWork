@@ -9,7 +9,7 @@
 
 ABaseEntity::ABaseEntity()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	EntityCapsule = CreateDefaultSubobject<UCapsuleComponent>("Entity Capsule");
 	EntityCapsule->SetupAttachment(RootComponent);
@@ -23,7 +23,6 @@ ABaseEntity::ABaseEntity()
 	
 	// Setup Movement
 	UCharacterMovementComponent* CharacterMovementComponent{GetCharacterMovement()};
-	CharacterMovementComponent->MaxWalkSpeed = MaxSpeed;
 	CharacterMovementComponent->MaxAcceleration = Acceleration;
 	CharacterMovementComponent->bOrientRotationToMovement = true;
 }
@@ -37,12 +36,58 @@ void ABaseEntity::BeginPlay()
 	PerceptionSphere->OnComponentBeginOverlap.AddDynamic(this, &ABaseEntity::OnPerceptionBegin);
 	PerceptionSphere->OnComponentEndOverlap.AddDynamic(this, &ABaseEntity::OnPerceptionEnd);
 
+	SetupStatsTimer();
 	InitializeFlock();
 }
 
-void ABaseEntity::Tick(float DeltaTime)
+void ABaseEntity::OnPerceptionBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Super::Tick(DeltaTime);
+	if (OverlappedComponent == nullptr || OverlappedComponent == EntityCapsule) return;
+
+	// Check if other entity has same tag
+	if (OtherActor->ActorHasTag(EntityTag))
+	{
+		ABaseEntity* OtherEntity{Cast<ABaseEntity>(OtherActor)};
+		if (OtherEntity == nullptr) return;
+		
+		HandleFlock(OtherEntity);
+	}
+}
+
+void ABaseEntity::OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	// Check if other entity has same tag
+	if (OtherActor->ActorHasTag(EntityTag))
+	{
+		HandleFlockOutOfReach();
+	}
+}
+
+#pragma region Stats
+void ABaseEntity::SetupStatsTimer()
+{
+	// Setup timer to start updating stats
+	GetWorld()->GetTimerManager().SetTimer(m_StatsTimer, this, &ABaseEntity::UpdateStats, StatsUpdateRate, true);
+}
+
+void ABaseEntity::UpdateStats()
+{
+	if (m_CurrentHunger >= LowFoodThresshold && m_CurrentThirst >= LowWaterThresshold)
+	{
+		// Increase health if not hungry or thirsty
+		m_CurrentHealth = FMath::Clamp(m_CurrentHealth + HealthIncreaseRate, 0, m_MaxStats);
+	}
+	else if (m_CurrentHunger < LowFoodThresshold || m_CurrentThirst < LowWaterThresshold)
+	{
+		// Decrease health if starving or dehydrated
+		m_CurrentHealth = FMath::Clamp(m_CurrentHealth - HealthDecreaseRate, 0, m_MaxStats);
+	}
+	
+	m_CurrentHunger = FMath::Clamp(m_CurrentHunger - FoodDecreaseRate, 0, m_MaxStats);
+	m_CurrentThirst = FMath::Clamp(m_CurrentThirst - WaterDecreaseRate, 0, m_MaxStats);
+
+	GEngine->AddOnScreenDebugMessage(-1, 0.3, FColor::Blue, FString::Printf(TEXT("Hunger: %f"), m_CurrentHunger));
+	GEngine->AddOnScreenDebugMessage(-1, 0.3, FColor::Purple, FString::Printf(TEXT("Thirst: %f"), m_CurrentThirst));
 }
 
 bool ABaseEntity::LowHealth() const
@@ -60,29 +105,24 @@ bool ABaseEntity::Thirsty() const
 	return m_CurrentThirst < LowWaterThresshold;
 }
 
+void ABaseEntity::Consume(EWorldCellType Type)
+{
+	switch (Type)
+	{
+	case EWorldCellType::Grass:
+	case EWorldCellType::Carcass:
+		m_CurrentHunger = FMath::Clamp(m_CurrentHunger + FoodIncreaseRate, 0, m_MaxStats);
+		break;
+	case EWorldCellType::Water:
+		m_CurrentThirst = FMath::Clamp(m_CurrentThirst + WaterIncreaseRate, 0, m_MaxStats);
+		break;
+	default:
+		break;
+	}
+}
+#pragma endregion
+
 #pragma region Flocking
-void ABaseEntity::OnPerceptionBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
-	if (OverlappedComponent == nullptr || OverlappedComponent == EntityCapsule) return;
-
-	// Check if other entity has appropriate tag
-	if (OtherActor->ActorHasTag(EntityTag))
-	{
-		ABaseEntity* OtherEntity{Cast<ABaseEntity>(OtherActor)};
-		if (OtherEntity == nullptr) return;
-		
-		HandleFlock(OtherEntity);
-	}
-}
-
-void ABaseEntity::OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-	if (OtherActor->ActorHasTag(EntityTag))
-	{
-		HandleFlockOutOfReach();
-	}
-}
-
 void ABaseEntity::InitializeFlock()
 {
 	TArray<AActor*> OverlappingEntities{};
