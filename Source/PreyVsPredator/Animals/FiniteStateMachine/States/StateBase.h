@@ -18,7 +18,9 @@ class PREYVSPREDATOR_API UStateBase : public UObject
 	float MaxSpeed{600.f};
 
 public:
-	void InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree);
+	UStateBase() = default;
+	
+	virtual void InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree);
 	
 	virtual void OnEnter(UBlackboardComponent* BlackboardComponent);
 	virtual void Update(UBlackboardComponent* BlackboardComponent, float DeltaTime);

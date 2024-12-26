@@ -12,6 +12,11 @@ class PREYVSPREDATOR_API UFlockingState : public UStateBase
 
 public:
 	UFlockingState() = default;
-
+	
+	virtual void InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree) override;
+	
 	virtual void OnEnter(UBlackboardComponent* BlackboardComponent) override;
+
+private:
+	FName m_ReachedDestinationKeyName{};
 };

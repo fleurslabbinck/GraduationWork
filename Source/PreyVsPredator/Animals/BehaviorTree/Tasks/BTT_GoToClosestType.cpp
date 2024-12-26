@@ -13,7 +13,7 @@ UBTT_GoToClosestType::UBTT_GoToClosestType()
 EBTNodeResult::Type UBTT_GoToClosestType::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	if (MoveToClosestTarget(OwnerComp)) return EBTNodeResult::InProgress;
-	return EBTNodeResult::Aborted;
+	return EBTNodeResult::Failed;
 }
 
 bool UBTT_GoToClosestType::MoveToClosestTarget(const UBehaviorTreeComponent& OwnerComp) const
@@ -27,6 +27,11 @@ bool UBTT_GoToClosestType::MoveToClosestTarget(const UBehaviorTreeComponent& Own
 		// Get next target type cell from world grid
 		const FVector CurrentPosition{Controller->GetPawn()->GetActorLocation()};
 		const FVector GrassPatchLocation{WorldGrid->NextCellPosition(CurrentPosition, TargetType)};
+		if (GrassPatchLocation == FVector::ZeroVector)
+		{
+			// If no valid next location, return false
+			return bSuccess;
+		}
 
 		// Move pawn towards closest available target type cell
 		bSuccess = Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptanceRadius()) != EPathFollowingRequestResult::Failed;
@@ -54,8 +59,10 @@ void UBTT_GoToClosestType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 			}
 		}
 
+		// In case cell not correct type, redo
 		if (!MoveToClosestTarget(OwnerComp))
 		{
+			// Fail if no valid cell to go to
 			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 		}
 	}

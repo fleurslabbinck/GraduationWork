@@ -31,13 +31,13 @@ float UWorldGridSubsystem::AcceptanceRadius() const
 
 FVector UWorldGridSubsystem::NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const
 {
-	const UGridCell* NextGridCell{m_WorldGrid->NextGridCell(CurrentPosition, Type)};
-	if (NextGridCell == nullptr)
+	FVector NextPos{FVector::ZeroVector};
+	if (const UGridCell* NextGridCell{m_WorldGrid->NextGridCell(CurrentPosition, Type)}; NextGridCell != nullptr)
 	{
-		NextGridCell = m_WorldGrid->GridCellAtIndex(0);
+		NextPos = NextGridCell->CenterPosition();
 	}
 
-	return NextGridCell->CenterPosition();
+	return NextPos;
 }
 
 bool UWorldGridSubsystem::AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const

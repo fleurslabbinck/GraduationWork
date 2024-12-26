@@ -11,25 +11,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb1db2a9-dc43-4ac1-abeb-8d78f1b6cf55" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/AI/BT_Hydrating.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/Conditions/ThirstyCondition.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/Conditions/ThirstyCondition.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/HydratingState.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/HydratingState.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/Conditions/StopFlockingCondition.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/Conditions/StopFlockingCondition.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PreyVsPredator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PreyVsPredator/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/AI/BP_PreyController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/AI/BP_PreyController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/AI/BB_Boar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Animals/HFSMBTH/Prey/AI/BB_Boar.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseController.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseEntity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseEntity.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseEntity.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseEntity.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_ConsumeType.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_ConsumeType.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_ConsumeType.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_ConsumeType.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestType.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestType.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/Conditions/FlockOutOfReachCondition.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/Conditions/StartFlockingCondition.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/Conditions/FlockOutOfReachCondition.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/Conditions/StartFlockingCondition.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/GridData.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/GridData.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridSubsystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridSubsystem.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -456,7 +451,7 @@
       <workItem from="1733485624465" duration="17288000" />
       <workItem from="1733579453929" duration="4223000" />
       <workItem from="1734888909677" duration="2346000" />
-      <workItem from="1734892719090" duration="18782000" />
+      <workItem from="1734892719090" duration="26806000" />
     </task>
     <servers />
   </component>

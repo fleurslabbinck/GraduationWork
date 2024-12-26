@@ -4,12 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "BehaviorTree/BehaviorTreeTypes.h"
 #include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
 #include "BaseController.generated.h"
 
+class UStopFlockingCondition;
 class UThirstyCondition;
 class UHydratingState;
-class UFlockOutOfReachCondition;
+class UStartFlockingCondition;
 class UBehaviorTree;
 class UFlockingState;
 class UGrazingState;
@@ -31,12 +33,18 @@ class PREYVSPREDATOR_API ABaseController : public AAIController, public IAnimalC
 
 	UPROPERTY(EditAnywhere, Category="Behavior Trees")
 	UBehaviorTree* HydratingBehaviorTree;
+
+	UPROPERTY(EditAnywhere, Category="Blackboard Keys")
+	FName ReachedDestinationKeyName{"ReachedDestination"};
 	
 public:
 	ABaseController();
 
 	virtual void SetTimer(const FTimerDelegate& Delegate, float InRate) override;
 	virtual void ResetTimer() override;
+
+	UFUNCTION()
+	FName GetReachedDestinationKeyName() const;
 
 protected:
 	virtual void BeginPlay() override;
@@ -57,5 +65,8 @@ private:
 	UThirstyCondition* m_ThirstyCondition;
 
 	UPROPERTY()
-	UFlockOutOfReachCondition* m_FlockOutOfReachCondition;
+	UStartFlockingCondition* m_StartFlockingCondition;
+
+	UPROPERTY()
+	UStopFlockingCondition* m_StopFlockingCondition;
 };
