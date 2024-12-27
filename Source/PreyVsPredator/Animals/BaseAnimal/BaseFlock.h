@@ -19,6 +19,8 @@ public:
 	void AddEntity(ABaseEntity* NewEntity);
 	void RemoveEntity(ABaseEntity* EntityToRemove);
 
+	FVector FlockLocation() const;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void BeginDestroy() override;

@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
+#include "PreyVsPredator/Animals/BaseAnimal/BaseFlock.h"
 
 FName UStartFlockingCondition::FlockLocationName{"FlockLocation"};
 
@@ -18,7 +19,7 @@ bool UStartFlockingCondition::Evaluate(UBlackboardComponent* BlackboardComponent
 			if (ShouldFlock)
 			{
 				// Set the flock location entity should go to in blackboard
-				const FVector FlockLocation{};
+				const FVector FlockLocation{Entity->Flock()->FlockLocation()};
 				BlackboardComponent->SetValueAsVector(FlockLocationName, FlockLocation);
 				
 				// Only reset if entity should flock

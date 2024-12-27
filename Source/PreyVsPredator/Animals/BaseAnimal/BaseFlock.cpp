@@ -49,3 +49,21 @@ void ABaseFlock::RemoveEntity(ABaseEntity* EntityToRemove)
 	m_Entities.Remove(EntityToRemove);
 	EntityToRemove->SetFlock(nullptr);
 }
+
+FVector ABaseFlock::FlockLocation() const
+{
+	FVector LocationSum = FVector::ZeroVector;
+
+	if (!m_Entities.IsEmpty())
+	{
+		// Average position of flock
+		for (const ABaseEntity* Entity : m_Entities)
+		{
+			LocationSum += Entity->GetActorLocation();
+		}
+
+		LocationSum /= m_Entities.Num();
+	}
+
+	return LocationSum;
+}

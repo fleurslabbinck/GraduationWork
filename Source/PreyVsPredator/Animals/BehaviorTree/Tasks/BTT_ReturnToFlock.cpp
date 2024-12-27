@@ -4,6 +4,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/PathFollowingComponent.h"
 
+
 UBTT_ReturnToFlock::UBTT_ReturnToFlock()
 {
 	bNotifyTick = true;
@@ -19,7 +20,7 @@ EBTNodeResult::Type UBTT_ReturnToFlock::ExecuteTask(UBehaviorTreeComponent& Owne
 		// Get target from blackboard
 		const FVector TargetLocation{OwnerComp.GetBlackboardComponent()->GetValueAsVector(FlockLocationKey.SelectedKeyName)};
 
-		// Move pawn towards closest available target type cell
+		// Move entity back towards flock average position
 		if (Controller->MoveToLocation(TargetLocation) != EPathFollowingRequestResult::Failed)
 		{
 			return EBTNodeResult::InProgress;
@@ -36,6 +37,8 @@ void UBTT_ReturnToFlock::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* Node
 
 	if (Controller->GetMoveStatus() == EPathFollowingStatus::Type::Idle)
 	{
+		// Reached destination when idle
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(ReachedDestinationKey.SelectedKeyName, true);
+		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
 	}
 }
