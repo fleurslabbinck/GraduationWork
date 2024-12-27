@@ -14,4 +14,7 @@ public:
 	UStartFlockingCondition() = default;
 	
 	virtual bool Evaluate(UBlackboardComponent* BlackboardComponent) const override;
+
+private:
+	static FName FlockLocationName;
 };

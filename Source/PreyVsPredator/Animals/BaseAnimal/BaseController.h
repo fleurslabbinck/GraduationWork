@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "BehaviorTree/BehaviorTreeTypes.h"
 #include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
 #include "BaseController.generated.h"
 
@@ -33,18 +32,12 @@ class PREYVSPREDATOR_API ABaseController : public AAIController, public IAnimalC
 
 	UPROPERTY(EditAnywhere, Category="Behavior Trees")
 	UBehaviorTree* HydratingBehaviorTree;
-
-	UPROPERTY(EditAnywhere, Category="Blackboard Keys")
-	FName ReachedDestinationKeyName{"ReachedDestination"};
 	
 public:
 	ABaseController();
 
 	virtual void SetTimer(const FTimerDelegate& Delegate, float InRate) override;
 	virtual void ResetTimer() override;
-
-	UFUNCTION()
-	FName GetReachedDestinationKeyName() const;
 
 protected:
 	virtual void BeginPlay() override;

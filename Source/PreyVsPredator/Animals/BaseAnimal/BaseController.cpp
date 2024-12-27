@@ -52,8 +52,3 @@ void ABaseController::ResetTimer()
 {
 	GetWorld()->GetTimerManager().ClearTimer(m_Timer);
 }
-
-FName ABaseController::GetReachedDestinationKeyName() const
-{
-	return ReachedDestinationKeyName;
-}

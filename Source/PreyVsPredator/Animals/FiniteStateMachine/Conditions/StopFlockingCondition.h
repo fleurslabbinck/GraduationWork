@@ -14,4 +14,7 @@ public:
 	UStopFlockingCondition() = default;
 	
 	virtual bool Evaluate(UBlackboardComponent* BlackboardComponent) const override;
+
+private:
+	static FName ReachedDestinationName;
 };

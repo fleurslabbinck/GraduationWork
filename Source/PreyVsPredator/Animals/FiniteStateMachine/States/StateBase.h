@@ -20,7 +20,7 @@ class PREYVSPREDATOR_API UStateBase : public UObject
 public:
 	UStateBase() = default;
 	
-	virtual void InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree);
+	void InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree);
 	
 	virtual void OnEnter(UBlackboardComponent* BlackboardComponent);
 	virtual void Update(UBlackboardComponent* BlackboardComponent, float DeltaTime);

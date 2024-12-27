@@ -59,11 +59,7 @@ void UBTT_GoToClosestType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 			}
 		}
 
-		// In case cell not correct type, redo
-		if (!MoveToClosestTarget(OwnerComp))
-		{
-			// Fail if no valid cell to go to
-			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
-		}
+		// Fail if not valid
+		FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
 	}
 }
