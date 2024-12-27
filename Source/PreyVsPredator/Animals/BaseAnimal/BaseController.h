@@ -9,7 +9,7 @@
 
 class UStopFlockingCondition;
 class UThirstyCondition;
-class UHydratingState;
+class UDrinkingState;
 class UStartFlockingCondition;
 class UBehaviorTree;
 class UFlockingState;
@@ -31,7 +31,7 @@ class PREYVSPREDATOR_API ABaseController : public AAIController, public IAnimalC
 	UBehaviorTree* FlockingBehaviorTree;
 
 	UPROPERTY(EditAnywhere, Category="Behavior Trees")
-	UBehaviorTree* HydratingBehaviorTree;
+	UBehaviorTree* DrinkingBehaviorTree;
 	
 public:
 	ABaseController();
@@ -49,7 +49,7 @@ private:
 	UGrazingState* m_GrazingState;
 
 	UPROPERTY()
-	UHydratingState* m_HydratingState;
+	UDrinkingState* m_DrinkingState;
 
 	UPROPERTY()
 	UFlockingState* m_FlockingState;

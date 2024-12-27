@@ -2,11 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "StateBase.h"
-#include "HydratingState.generated.h"
+#include "DrinkingState.generated.h"
 
 
 UCLASS()
-class PREYVSPREDATOR_API UHydratingState : public UStateBase
+class PREYVSPREDATOR_API UDrinkingState : public UStateBase
 {
 	GENERATED_BODY()
 
@@ -14,7 +14,7 @@ class PREYVSPREDATOR_API UHydratingState : public UStateBase
 	float HydratingSpeed{300.f};
 
 public:
-	UHydratingState() = default;
+	UDrinkingState() = default;
 
 	virtual void OnEnter(UBlackboardComponent* BlackboardComponent) override;
 	virtual void OnExit(UBlackboardComponent* BlackboardComponent) override;

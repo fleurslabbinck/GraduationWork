@@ -6,7 +6,7 @@
 #include "PreyVsPredator/Animals/FiniteStateMachine/Conditions/ThirstyCondition.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/FlockingState.h"
 #include "PreyVsPredator/Animals/FiniteStateMachine/States/GrazingState.h"
-#include "PreyVsPredator/Animals/FiniteStateMachine/States/HydratingState.h"
+#include "PreyVsPredator/Animals/FiniteStateMachine/States/DrinkingState.h"
 
 
 ABaseController::ABaseController()
@@ -22,7 +22,7 @@ void ABaseController::BeginPlay()
 
 	// Create states
 	m_GrazingState = NewObject<UGrazingState>(GetWorld());
-	m_HydratingState = NewObject<UHydratingState>(GetWorld());
+	m_DrinkingState = NewObject<UDrinkingState>(GetWorld());
 	m_FlockingState = NewObject<UFlockingState>(GetWorld());
 
 	// Create conditions
@@ -32,13 +32,13 @@ void ABaseController::BeginPlay()
 
 	// Set Behavior Tree classes
 	m_GrazingState->InitializeState(this, GrazingBehaviorTree);
-	m_HydratingState->InitializeState(this, HydratingBehaviorTree);
+	m_DrinkingState->InitializeState(this, DrinkingBehaviorTree);
 	m_FlockingState->InitializeState(this, FlockingBehaviorTree);
 
 	// Create transitions
 	FiniteStateMachine->SetStartState(m_GrazingState);
-	FiniteStateMachine->AddTransition(m_GrazingState, m_HydratingState, m_ThirstyCondition);
-	FiniteStateMachine->AddTransition(m_FlockingState, m_HydratingState, m_ThirstyCondition);
+	FiniteStateMachine->AddTransition(m_GrazingState, m_DrinkingState, m_ThirstyCondition);
+	FiniteStateMachine->AddTransition(m_FlockingState, m_DrinkingState, m_ThirstyCondition);
 	FiniteStateMachine->AddTransition(m_GrazingState, m_FlockingState, m_StartFlockingCondition);
 	FiniteStateMachine->AddTransition(m_FlockingState, m_GrazingState, m_StopFlockingCondition);
 }

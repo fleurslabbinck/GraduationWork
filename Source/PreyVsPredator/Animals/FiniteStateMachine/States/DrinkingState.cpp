@@ -1,4 +1,4 @@
-﻿#include "HydratingState.h"
+﻿#include "DrinkingState.h"
 
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -7,14 +7,14 @@
 
 class UWorldGridSubsystem;
 
-void UHydratingState::OnEnter(UBlackboardComponent* BlackboardComponent)
+void UDrinkingState::OnEnter(UBlackboardComponent* BlackboardComponent)
 {
 	Super::OnEnter(BlackboardComponent);
 
 	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Hydrating State"));
 }
 
-void UHydratingState::OnExit(UBlackboardComponent* BlackboardComponent)
+void UDrinkingState::OnExit(UBlackboardComponent* BlackboardComponent)
 {
 	Super::OnExit(BlackboardComponent);
 
@@ -27,7 +27,7 @@ void UHydratingState::OnExit(UBlackboardComponent* BlackboardComponent)
 	}
 }
 
-void UHydratingState::UpdateMaxSpeed()
+void UDrinkingState::UpdateMaxSpeed()
 {
 	if (m_CharacterMovement == nullptr) return;
 	m_CharacterMovement->MaxWalkSpeed = HydratingSpeed;
