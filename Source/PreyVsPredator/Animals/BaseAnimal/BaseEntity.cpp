@@ -86,8 +86,8 @@ void ABaseEntity::UpdateStats()
 	m_CurrentHunger = FMath::Clamp(m_CurrentHunger - FoodDecreaseRate, 0, m_MaxStats);
 	m_CurrentThirst = FMath::Clamp(m_CurrentThirst - WaterDecreaseRate, 0, m_MaxStats);
 
-	GEngine->AddOnScreenDebugMessage(-1, 0.3, FColor::Blue, FString::Printf(TEXT("Hunger: %f"), m_CurrentHunger));
-	GEngine->AddOnScreenDebugMessage(-1, 0.3, FColor::Purple, FString::Printf(TEXT("Thirst: %f"), m_CurrentThirst));
+	//GEngine->AddOnScreenDebugMessage(-1, 0.3, FColor::Blue, FString::Printf(TEXT("Hunger: %f"), m_CurrentHunger));
+	//GEngine->AddOnScreenDebugMessage(-1, 0.3, FColor::Purple, FString::Printf(TEXT("Thirst: %f"), m_CurrentThirst));
 }
 
 bool ABaseEntity::LowHealth() const

@@ -57,6 +57,26 @@ EWorldCellType UWorldGridCell::WorldType() const
 	return Type;
 }
 
+bool UWorldGridCell::Available() const
+{
+	return Super::Available() && m_SubscribedEntities.Num() < MaxEntities;
+}
+
+void UWorldGridCell::Subscribe(AActor* EntityToAdd)
+{
+	m_SubscribedEntities.Add(EntityToAdd);
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Cyan, TEXT("Subscribed"));
+}
+
+void UWorldGridCell::Unsubscribe(AActor* EntityToRemove)
+{
+	if (m_SubscribedEntities.Contains(EntityToRemove))
+	{
+		m_SubscribedEntities.Remove(EntityToRemove);
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Magenta, TEXT("Unsubscribed"));
+	}
+}
+
 float UWorldGridCell::Content() const
 {
 	return m_Content;
@@ -64,7 +84,9 @@ float UWorldGridCell::Content() const
 
 bool UWorldGridCell::Consume()
 {
-	if (m_Content > FLT_EPSILON)
+	bool Consumed{false};
+	
+	if (!bRegenerating)
 	{
 		float Rate;
 		
@@ -83,12 +105,15 @@ bool UWorldGridCell::Consume()
 		// Cell becomes unavailable and starts regenerating when no more content
 		if (m_Content < FLT_EPSILON)
 		{
-			SetAvailability(false);
+			bRegenerating = true;
 			Regenerate();
+			SetAvailability(false);
 		}
+
+		Consumed = true;
 	}
 	
-	return Available();
+	return Consumed;
 }
 
 void UWorldGridCell::Regenerate()
@@ -102,6 +127,7 @@ void UWorldGridCell::Regenerate()
 	}
 	else
 	{
+		bRegenerating = false;
 		SetAvailability(true);
 	}
 }

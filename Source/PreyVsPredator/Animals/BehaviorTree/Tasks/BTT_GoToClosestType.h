@@ -14,6 +14,9 @@ class PREYVSPREDATOR_API UBTT_GoToClosestType : public UBTTask_BlackboardBase
 	UPROPERTY(EditAnywhere, Category="Params")
 	EWorldCellType TargetType{EWorldCellType::Grass};
 
+	UPROPERTY(EditAnywhere, Category="Blackboard In")
+	FBlackboardKeySelector ConsumeLocationKey;
+
 public:
 	UBTT_GoToClosestType();
 
@@ -23,5 +26,5 @@ protected:
 private:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
-	bool MoveToClosestTarget(const UBehaviorTreeComponent& OwnerComp) const;
+	bool MoveToClosestTarget(UBehaviorTreeComponent& OwnerComp) const;
 };

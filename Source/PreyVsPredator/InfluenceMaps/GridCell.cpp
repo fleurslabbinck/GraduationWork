@@ -2,20 +2,20 @@
 
 void UGridCell::Initialize(const FVector GridPosition, float CellSize)
 {
-	Cell.Position = GridPosition;
-	Cell.Size = CellSize;
+	m_Cell.Position = GridPosition;
+	m_Cell.Size = CellSize;
 }
 
 FRect UGridCell::GridCell() const
 {
-	return Cell;
+	return m_Cell;
 }
 
 FVector UGridCell::CenterPosition() const
 {
 	// Cell position is bottom left
-	const float HalfSize{Cell.Size / 2};
-	return FVector{Cell.Position.X + HalfSize, Cell.Position.Y + HalfSize, Cell.Position.Z};
+	const float HalfSize{m_Cell.Size / 2};
+	return FVector{m_Cell.Position.X + HalfSize, m_Cell.Position.Y + HalfSize, m_Cell.Position.Z};
 }
 
 bool UGridCell::Available() const
@@ -30,9 +30,9 @@ void UGridCell::SetAvailability(bool Available)
 
 void UGridCell::DrawDebugCell(uint32 Index) const
 {
-	const FVector Start{Cell.Position};
-	const FVector Top{Cell.Position.X, Cell.Position.Y + Cell.Size, Cell.Position.Z};
-	const FVector Right{Cell.Position.X + Cell.Size, Cell.Position.Y, Cell.Position.Z};
+	const FVector Start{m_Cell.Position};
+	const FVector Top{m_Cell.Position.X, m_Cell.Position.Y + m_Cell.Size, m_Cell.Position.Z};
+	const FVector Right{m_Cell.Position.X + m_Cell.Size, m_Cell.Position.Y, m_Cell.Position.Z};
 	DrawDebugLine(GetWorld(), Start, Top, FColor::Red, true);
 	DrawDebugLine(GetWorld(), Start, Right, FColor::Red, true);
 

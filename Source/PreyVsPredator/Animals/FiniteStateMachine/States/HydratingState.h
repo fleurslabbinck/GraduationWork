@@ -17,6 +17,7 @@ public:
 	UHydratingState() = default;
 
 	virtual void OnEnter(UBlackboardComponent* BlackboardComponent) override;
+	virtual void OnExit(UBlackboardComponent* BlackboardComponent) override;
 
 protected:
 	virtual void UpdateMaxSpeed() override;

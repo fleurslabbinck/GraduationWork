@@ -10,9 +10,6 @@ class PREYVSPREDATOR_API UGridCell : public UObject
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Grid")
-	FRect Cell;
-
 public:
 	UGridCell() = default;
 	
@@ -27,4 +24,5 @@ public:
 
 private:
 	bool bAvailable{true};
+	FRect m_Cell;
 };

@@ -21,9 +21,9 @@ void ABaseController::BeginPlay()
 	Super::BeginPlay();
 
 	// Create states
-	m_GrazingState = NewObject<UGrazingState>();
-	m_HydratingState = NewObject<UHydratingState>();
-	m_FlockingState = NewObject<UFlockingState>();
+	m_GrazingState = NewObject<UGrazingState>(GetWorld());
+	m_HydratingState = NewObject<UHydratingState>(GetWorld());
+	m_FlockingState = NewObject<UFlockingState>(GetWorld());
 
 	// Create conditions
 	m_ThirstyCondition = NewObject<UThirstyCondition>();

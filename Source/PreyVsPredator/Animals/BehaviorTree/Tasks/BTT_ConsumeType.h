@@ -12,10 +12,13 @@ class PREYVSPREDATOR_API UBTT_ConsumeType : public UBTTask_BlackboardBase
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, Category="Params")
-	EWorldCellType TargetType{EWorldCellType::Grass};
+	EWorldCellType TargetType{EWorldCellType::Grass};;
 
 	UPROPERTY(EditAnywhere, Category="Params")
 	float EatTime{1.f};
+
+	UPROPERTY(EditAnywhere, Category="Blackboard Out")
+	FBlackboardKeySelector ConsumeLocationKey;
 
 public:
 	UBTT_ConsumeType();

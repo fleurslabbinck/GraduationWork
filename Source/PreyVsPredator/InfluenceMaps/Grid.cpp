@@ -202,7 +202,6 @@ bool UGrid::IsCellTypeValid(uint32 Index, EWorldCellType Type) const
 	{
 	case EWorldCellType::None:
 		return true;
-		break;
 	default:
 		{
 			UWorldGridCell* WorldGridCell{Cast<UWorldGridCell>(m_GridCells[Index])};

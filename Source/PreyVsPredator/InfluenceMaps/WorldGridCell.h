@@ -16,35 +16,38 @@ class PREYVSPREDATOR_API UWorldGridCell : public UGridCell
 	UPROPERTY(EditAnywhere, Category="Grid")
 	EWorldCellType Type{EWorldCellType::Grass};
 
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="Grid|Mesh")
 	UStaticMesh* GridCellMesh;
 
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="Grid|Mesh")
+	float MeshScale{100.f};
+
+	UPROPERTY(EditAnywhere, Category="Grid|Color")
 	FLinearColor GrassColor{0, 1.f, 0.f, 1.f};
 
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="Grid|Color")
 	FLinearColor DirtColor{1.f, 0.5f, 0.f, 1.f};
 
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="Grid|Color")
 	FLinearColor WaterColor{0, 0.5f, 1.f, 1.f};
+
+	UPROPERTY(EditAnywhere, Category="Grid|Color")
+	FName CellColorParameter{"Color"};
 	
-	UPROPERTY(EditAnywhere, Category="Grid")
-	float MeshScale{100.f};
-	
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="Grid|Content")
 	float MaxContent{1.f};
 
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="Grid|Content")
 	float ConsumeRate{-0.05f};
 
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="Grid|Content")
 	float RegenRate{0.001f};
 
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="Grid|Content")
 	float RegenTime{0.5f};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	FName CellColorParameter{"Color"};
+	int32 MaxEntities{3};
 
 public:
 	UWorldGridCell() = default;
@@ -53,12 +56,17 @@ public:
 
 	void ChangeWorldType(EWorldCellType NewType);
 	EWorldCellType WorldType() const;
+
+	virtual bool Available() const override;
+	void Subscribe(AActor* EntityToAdd);
+	void Unsubscribe(AActor* EntityToRemove);
 	
 	float Content() const;
 	bool Consume();
 	void Regenerate();
 
 private:
+	bool bRegenerating{false};
 	float m_Content{MaxContent};
 	FTimerHandle m_RegenTimer{};
 
@@ -67,6 +75,9 @@ private:
 
 	UPROPERTY()
 	UMaterialInstanceDynamic* m_CellMaterial{nullptr};
+
+	UPROPERTY()
+	TArray<AActor*> m_SubscribedEntities;
 
 	void SetCellColor(FLinearColor NewColor) const;
 	void SetContents(float Rate);

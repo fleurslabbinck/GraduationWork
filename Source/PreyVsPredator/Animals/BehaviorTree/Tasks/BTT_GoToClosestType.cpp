@@ -1,6 +1,7 @@
 ﻿#include "BTT_GoToClosestType.h"
 
 #include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseFlock.h"
@@ -10,6 +11,8 @@
 UBTT_GoToClosestType::UBTT_GoToClosestType()
 {
 	bNotifyTick = true;
+
+	ConsumeLocationKey.AddVectorFilter(this, "ConsumeLocation");
 }
 
 EBTNodeResult::Type UBTT_GoToClosestType::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -18,7 +21,7 @@ EBTNodeResult::Type UBTT_GoToClosestType::ExecuteTask(UBehaviorTreeComponent& Ow
 	return EBTNodeResult::Failed;
 }
 
-bool UBTT_GoToClosestType::MoveToClosestTarget(const UBehaviorTreeComponent& OwnerComp) const
+bool UBTT_GoToClosestType::MoveToClosestTarget(UBehaviorTreeComponent& OwnerComp) const
 {
 	bool bSuccess{false};
 
@@ -30,24 +33,28 @@ bool UBTT_GoToClosestType::MoveToClosestTarget(const UBehaviorTreeComponent& Own
 			const UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
 			
 			// Get next target type cell from world grid
-			FVector TargetPosition;
+			FVector TargetLocation;
 
 			if (const ABaseFlock* Flock{Entity->Flock()}; Flock != nullptr)
 			{
-				// Take flock location if entity is currently in flock
-				TargetPosition = Flock->FlockLocation();
+				// Influence by flock location if entity is in flock
+				TargetLocation = (Flock->FlockLocation() + Entity->GetActorLocation()) / 2.f;
 			}
 			else
 			{
-				TargetPosition = Entity->GetActorLocation();
+				TargetLocation = Entity->GetActorLocation();
 			}
 			
-			const FVector GrassPatchLocation{WorldGrid->NextCellPosition(TargetPosition, TargetType)};
+			const FVector GrassPatchLocation{WorldGrid->NextCellPosition(TargetLocation, TargetType)};
+			
 			if (GrassPatchLocation == FVector::ZeroVector)
 			{
 				// If no valid next location, return false
 				return bSuccess;
 			}
+
+			// Set consume location in blackboard
+			OwnerComp.GetBlackboardComponent()->SetValueAsVector(ConsumeLocationKey.SelectedKeyName, GrassPatchLocation);
 
 			// Move pawn towards closest available target type cell
 			bSuccess = Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptanceRadius()) != EPathFollowingRequestResult::Failed;
@@ -64,15 +71,22 @@ void UBTT_GoToClosestType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 
 	if (Controller->GetMoveStatus() == EPathFollowingStatus::Type::Idle)
 	{
-		const UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
-		const UWorldGridCell* CurrentCell{WorldGrid->CellAtPosition(Controller->GetPawn()->GetActorLocation())};
-		if (CurrentCell != nullptr)
+		if (APawn* EntityPawn{Cast<APawn>(Controller->GetPawn())}; EntityPawn != nullptr)
 		{
-			// if cell has target type, succeed
-			if (CurrentCell->WorldType() == TargetType && CurrentCell->Available())
+			const UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
+			UWorldGridCell* CurrentCell{WorldGrid->CellAtPosition(Controller->GetPawn()->GetActorLocation())};
+			if (CurrentCell != nullptr)
 			{
-				FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-				return;
+				// if cell has target type, succeed
+				if (CurrentCell->WorldType() == TargetType && CurrentCell->Available())
+				{
+					// Subscribe to cell
+					CurrentCell->Subscribe(EntityPawn);
+
+					// Succeed task
+					FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+					return;
+				}
 			}
 		}
 
