@@ -63,10 +63,6 @@ void UFiniteStateMachine::AddTransition(UStateBase* StartState, UStateBase* ToSt
 		// Add start state
 		Transitions.Add(StartState, FTransitions());
 	}
-	if (Transitions.Contains(StartState))
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Added Start State"));
-	}
 
 	// Add transition from start state to end state
 	Transitions[StartState].Add(FTransitionStatePair(Condition, ToState));

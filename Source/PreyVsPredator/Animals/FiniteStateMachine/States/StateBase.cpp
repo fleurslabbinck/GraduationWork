@@ -38,8 +38,6 @@ void UStateBase::OnExit(UBlackboardComponent* BlackboardComponent)
 			AnimalController->ResetTimer();
 		}
 	}
-	
-	m_AIController->GetBrainComponent()->StopLogic(TEXT("Exiting State"));
 }
 
 void UStateBase::UpdateMaxSpeed()

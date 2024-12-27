@@ -11,11 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb1db2a9-dc43-4ac1-abeb-8d78f1b6cf55" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/HydratingState.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/DrinkingState.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/HydratingState.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/DrinkingState.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.PreyVsPredator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PreyVsPredator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,7 +265,7 @@
       <workItem from="1734892719090" duration="26806000" />
       <workItem from="1735234779648" duration="29000" />
       <workItem from="1735234878338" duration="4384000" />
-      <workItem from="1735304614515" duration="12827000" />
+      <workItem from="1735304614515" duration="13471000" />
     </task>
     <servers />
   </component>
