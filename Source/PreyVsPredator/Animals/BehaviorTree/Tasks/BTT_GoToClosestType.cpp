@@ -2,6 +2,8 @@
 
 #include "AIController.h"
 #include "Navigation/PathFollowingComponent.h"
+#include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
+#include "PreyVsPredator/Animals/BaseAnimal/BaseFlock.h"
 #include "PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h"
 
 
@@ -22,19 +24,34 @@ bool UBTT_GoToClosestType::MoveToClosestTarget(const UBehaviorTreeComponent& Own
 
 	if (AAIController* Controller{OwnerComp.GetAIOwner()}; Controller != nullptr)
 	{
-		UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
-
-		// Get next target type cell from world grid
-		const FVector CurrentPosition{Controller->GetPawn()->GetActorLocation()};
-		const FVector GrassPatchLocation{WorldGrid->NextCellPosition(CurrentPosition, TargetType)};
-		if (GrassPatchLocation == FVector::ZeroVector)
+		ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())};
+		if (Entity != nullptr)
 		{
-			// If no valid next location, return false
-			return bSuccess;
-		}
+			const UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
+			
+			// Get next target type cell from world grid
+			FVector TargetPosition;
 
-		// Move pawn towards closest available target type cell
-		bSuccess = Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptanceRadius()) != EPathFollowingRequestResult::Failed;
+			if (const ABaseFlock* Flock{Entity->Flock()}; Flock != nullptr)
+			{
+				// Take flock location if entity is currently in flock
+				TargetPosition = Flock->FlockLocation();
+			}
+			else
+			{
+				TargetPosition = Entity->GetActorLocation();
+			}
+			
+			const FVector GrassPatchLocation{WorldGrid->NextCellPosition(TargetPosition, TargetType)};
+			if (GrassPatchLocation == FVector::ZeroVector)
+			{
+				// If no valid next location, return false
+				return bSuccess;
+			}
+
+			// Move pawn towards closest available target type cell
+			bSuccess = Controller->MoveToLocation(GrassPatchLocation, WorldGrid->AcceptanceRadius()) != EPathFollowingRequestResult::Failed;
+		}
 	}
 
 	return bSuccess;
