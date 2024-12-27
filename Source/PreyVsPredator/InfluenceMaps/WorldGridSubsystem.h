@@ -18,16 +18,16 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 	FVector StartPosition{};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	uint32 Rows{10};
+	uint32 Rows{50};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	uint32 Columns{10};
+	uint32 Columns{50};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	float CellSize{200.f};
+	float CellSize{150.f};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	float AcceptanceDivisionFactor{5.f};
+	float AcceptanceDivisionFactor{3.f};
 
 public:
 	void SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass);
