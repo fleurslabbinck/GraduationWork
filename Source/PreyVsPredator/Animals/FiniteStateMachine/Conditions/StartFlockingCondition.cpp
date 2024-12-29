@@ -3,7 +3,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
-#include "PreyVsPredator/Animals/BaseAnimal/BaseFlock.h"
+#include "PreyVsPredator/Animals/Flocking/BaseFlock.h"
 
 FName UStartFlockingCondition::FlockLocationName{"FlockLocation"};
 

@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
-#include "PreyVsPredator/InfluenceMaps/GridData.h"
+#include "PreyVsPredator/Helpers/GridData.h"
 #include "BTT_ConsumeType.generated.h"
 
 

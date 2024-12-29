@@ -1,7 +1,6 @@
 ﻿#include "BaseFlock.h"
 
-#include "BaseEntity.h"
-
+#include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
 
 void ABaseFlock::BeginPlay()
 {
@@ -48,6 +47,16 @@ void ABaseFlock::RemoveEntity(ABaseEntity* EntityToRemove)
 {
 	m_Entities.Remove(EntityToRemove);
 	EntityToRemove->SetFlock(nullptr);
+}
+
+bool ABaseFlock::Thirsty() const
+{
+	return bThirsty;
+}
+
+void ABaseFlock::SetThirsty(bool Thirsty)
+{
+	bThirsty = Thirsty;
 }
 
 FVector ABaseFlock::FlockLocation() const

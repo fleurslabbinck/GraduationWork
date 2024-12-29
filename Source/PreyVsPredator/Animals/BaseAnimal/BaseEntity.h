@@ -2,9 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "PreyVsPredator/InfluenceMaps/GridData.h"
+#include "PreyVsPredator/Helpers/GridData.h"
 #include "BaseEntity.generated.h"
 
+class UEntityStats;
+class UWidgetComponent;
 class USphereComponent;
 class ABaseFlock;
 class UBehaviorTree;
@@ -27,6 +29,9 @@ class PREYVSPREDATOR_API ABaseEntity : public ACharacter
 
 	UPROPERTY(EditDefaultsOnly, Instanced, Category="Components")
 	USphereComponent* PerceptionSphere;
+
+	UPROPERTY(EditDefaultsOnly, Instanced, Category="Components")
+	UWidgetComponent* EntityStats;
 
 	UPROPERTY(EditAnywhere, Category="Entity|Movement")
 	float Acceleration{1500.f};
@@ -90,10 +95,12 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 
 private:
 	bool m_ShouldFlock{false};
 	const float m_MaxStats{100.f};
+	float m_CurrentStamina{m_MaxStats};
 	float m_CurrentHealth{m_MaxStats};
 	float m_CurrentHunger{m_MaxStats};
 	float m_CurrentThirst{m_MaxStats};
@@ -103,13 +110,18 @@ private:
 	UPROPERTY()
 	ABaseFlock* m_Flock{nullptr};
 
+	UPROPERTY()
+	UEntityStats* m_EntityStatsWidget{nullptr};
+
 	UFUNCTION()
 	void OnPerceptionBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION()
 	void OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
+	void InitializeStats();
 	void SetupStatsTimer();
+	void UpdateWidgetRotation();
 	void UpdateStats();
 
 	void InitializeFlock();

@@ -4,7 +4,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
-#include "PreyVsPredator/Animals/BaseAnimal/BaseFlock.h"
+#include "PreyVsPredator/Animals/Flocking/BaseFlock.h"
 #include "PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h"
 
 

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "GridData.h"
+#include "PreyVsPredator/Helpers/GridData.h"
 #include "UObject/Object.h"
 #include "GridCell.generated.h"
 

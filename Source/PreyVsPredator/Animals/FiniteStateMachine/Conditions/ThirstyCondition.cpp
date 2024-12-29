@@ -3,6 +3,7 @@
 #include "AIController.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
+#include "PreyVsPredator/Animals/Flocking/BaseFlock.h"
 
 
 bool UThirstyCondition::Evaluate(UBlackboardComponent* BlackboardComponent) const
@@ -13,7 +14,14 @@ bool UThirstyCondition::Evaluate(UBlackboardComponent* BlackboardComponent) cons
 	{
 		if (const ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())}; Entity != nullptr)
 		{
-			ShouldHydrate = Entity->Thirsty();
+			if (const ABaseFlock* Flock{Entity->Flock()}; Flock != nullptr)
+			{
+				ShouldHydrate = Flock->Thirsty();
+			}
+			else
+			{
+				ShouldHydrate = Entity->Thirsty();
+			}
 		}
 	}
 	

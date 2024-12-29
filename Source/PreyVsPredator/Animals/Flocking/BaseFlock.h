@@ -19,6 +19,8 @@ public:
 	void AddEntity(ABaseEntity* NewEntity);
 	void RemoveEntity(ABaseEntity* EntityToRemove);
 
+	bool Thirsty() const;
+	void SetThirsty(bool Thirsty);
 	FVector FlockLocation() const;
 
 protected:
@@ -26,6 +28,8 @@ protected:
 	virtual void BeginDestroy() override;
 	
 private:
+	bool bThirsty{false};
+	
 	UPROPERTY()
 	TArray<ABaseEntity*> m_Entities;
 };

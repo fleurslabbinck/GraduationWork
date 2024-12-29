@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#include <memory>
 #include "CoreMinimal.h"
 #include "GridData.generated.h"
 
@@ -25,7 +24,7 @@ struct FRect
 
 
 //-------------------------------------------------------------------------------------
-//	WORLD TYPE STRUCT
+//	WORLD TYPE ENUM
 //-------------------------------------------------------------------------------------
 
 UENUM(BlueprintType)

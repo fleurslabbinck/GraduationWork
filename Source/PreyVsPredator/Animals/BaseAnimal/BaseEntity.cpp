@@ -1,15 +1,18 @@
 ﻿#include "BaseEntity.h"
 
-#include "BaseFlock.h"
-#include "FlockSubsystem.h"
+#include "PreyVsPredator/Animals/Flocking/BaseFlock.h"
+#include "PreyVsPredator/Animals/Flocking/FlockSubsystem.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "PreyVsPredator/Animals/Widgets/EntityStats.h"
 
 
 ABaseEntity::ABaseEntity()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	EntityCapsule = CreateDefaultSubobject<UCapsuleComponent>("Entity Capsule");
 	EntityCapsule->SetupAttachment(RootComponent);
@@ -20,6 +23,10 @@ ABaseEntity::ABaseEntity()
 	PerceptionSphere->SetupAttachment(RootComponent);
 	PerceptionSphere->SetGenerateOverlapEvents(true);
 	PerceptionSphere->SetCollisionProfileName(PreyVsPredator::CollisionPresets::AnimalPerception);
+
+	EntityStats = CreateDefaultSubobject<UWidgetComponent>("Entity Stats");
+	EntityStats->SetupAttachment(RootComponent);
+	EntityStats->SetDrawAtDesiredSize(true);
 	
 	// Setup Movement
 	UCharacterMovementComponent* CharacterMovementComponent{GetCharacterMovement()};
@@ -36,8 +43,15 @@ void ABaseEntity::BeginPlay()
 	PerceptionSphere->OnComponentBeginOverlap.AddDynamic(this, &ABaseEntity::OnPerceptionBegin);
 	PerceptionSphere->OnComponentEndOverlap.AddDynamic(this, &ABaseEntity::OnPerceptionEnd);
 
-	SetupStatsTimer();
+	InitializeStats();
 	InitializeFlock();
+}
+
+void ABaseEntity::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	UpdateWidgetRotation();
 }
 
 void ABaseEntity::OnPerceptionBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -64,30 +78,76 @@ void ABaseEntity::OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AAct
 }
 
 #pragma region Stats
+void ABaseEntity::InitializeStats()
+{
+	if (UUserWidget* Widget{Cast<UUserWidget>(EntityStats->GetWidget())}; Widget != nullptr)
+	{
+		m_EntityStatsWidget = Cast<UEntityStats>(Widget);
+		if (m_EntityStatsWidget != nullptr)
+		{
+			m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Stamina, m_CurrentStamina);
+			m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Health, m_CurrentHealth);
+			m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Hunger, m_CurrentHunger);
+			m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Thirst, m_CurrentThirst);
+		}
+	}
+	
+	SetupStatsTimer();
+}
+
 void ABaseEntity::SetupStatsTimer()
 {
 	// Setup timer to start updating stats
 	GetWorld()->GetTimerManager().SetTimer(m_StatsTimer, this, &ABaseEntity::UpdateStats, StatsUpdateRate, true);
 }
 
+void ABaseEntity::UpdateWidgetRotation()
+{
+	// Stats always face camera
+	const FVector CameraLocation{UGameplayStatics::GetPlayerCameraManager(this, 0)->GetCameraLocation()};
+	const FVector ToCamera{CameraLocation - EntityStats->GetComponentLocation()};
+	const FRotator LookAtRotation{FRotationMatrix::MakeFromX(ToCamera).Rotator()};
+	EntityStats->SetWorldRotation(LookAtRotation);
+}
+
 void ABaseEntity::UpdateStats()
 {
+	bool UpdateHealth{false};
+	
 	if (m_CurrentHunger >= LowFoodThresshold && m_CurrentThirst >= LowWaterThresshold)
 	{
 		// Increase health if not hungry or thirsty
 		m_CurrentHealth = FMath::Clamp(m_CurrentHealth + HealthIncreaseRate, 0, m_MaxStats);
+		UpdateHealth = true;
 	}
 	else if (m_CurrentHunger < LowFoodThresshold || m_CurrentThirst < LowWaterThresshold)
 	{
 		// Decrease health if starving or dehydrated
 		m_CurrentHealth = FMath::Clamp(m_CurrentHealth - HealthDecreaseRate, 0, m_MaxStats);
+		UpdateHealth = true;
+	}
+
+	if (UpdateHealth)
+	{
+		// Update health bar
+		m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Health, m_CurrentHealth);
 	}
 	
 	m_CurrentHunger = FMath::Clamp(m_CurrentHunger - FoodDecreaseRate, 0, m_MaxStats);
 	m_CurrentThirst = FMath::Clamp(m_CurrentThirst - WaterDecreaseRate, 0, m_MaxStats);
 
-	//GEngine->AddOnScreenDebugMessage(-1, 0.3, FColor::Blue, FString::Printf(TEXT("Hunger: %f"), m_CurrentHunger));
-	//GEngine->AddOnScreenDebugMessage(-1, 0.3, FColor::Purple, FString::Printf(TEXT("Thirst: %f"), m_CurrentThirst));
+	// Update hunger and thirst bars
+	m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Hunger, m_CurrentHunger);
+	m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Thirst, m_CurrentThirst);
+
+	// Check if entity thirsty
+	if (m_CurrentThirst < LowWaterThresshold && m_CurrentThirst < m_CurrentHunger)
+	{
+		if (m_Flock != nullptr)
+		{
+			m_Flock->SetThirsty(true);
+		}
+	}
 }
 
 bool ABaseEntity::LowHealth() const

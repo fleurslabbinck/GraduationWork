@@ -1,0 +1,29 @@
+﻿#pragma once
+
+#include "CoreMinimal.h"
+#include "Blueprint/UserWidget.h"
+#include "StatsProgressBar.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnProgressChanged, float, Value);
+
+
+class UProgressBar;
+
+UCLASS()
+class PREYVSPREDATOR_API UStatsProgressBar : public UUserWidget
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, meta = (BindWidget, AllowPrivateAccess = "true"))
+	UProgressBar* StatBar;
+
+public:
+	FOnProgressChanged OnProgressChanged;
+
+protected:
+	virtual void NativeConstruct() override;
+
+private:
+	UFUNCTION()
+	void UpdateProgress(float Value);
+};

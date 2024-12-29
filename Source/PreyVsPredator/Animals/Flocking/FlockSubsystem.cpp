@@ -1,6 +1,6 @@
 ﻿#include "FlockSubsystem.h"
 
-#include "BaseEntity.h"
+#include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
 #include "BaseFlock.h"
 
 void UFlockSubsystem::UpdateFlocks()
