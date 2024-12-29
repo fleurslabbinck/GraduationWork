@@ -35,6 +35,4 @@ void UGridCell::DrawDebugCell(uint32 Index) const
 	const FVector Right{m_Cell.Position.X + m_Cell.Size, m_Cell.Position.Y, m_Cell.Position.Z};
 	DrawDebugLine(GetWorld(), Start, Top, FColor::Red, true);
 	DrawDebugLine(GetWorld(), Start, Right, FColor::Red, true);
-
-	DrawDebugString(GetWorld(), FVector{CenterPosition()}, FString::Printf(TEXT("%d"), Index), nullptr, FColor::Red, 1000);
 }
