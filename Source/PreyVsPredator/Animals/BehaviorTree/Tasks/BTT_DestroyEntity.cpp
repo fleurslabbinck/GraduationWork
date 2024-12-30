@@ -10,6 +10,7 @@ EBTNodeResult::Type UBTT_DestroyEntity::ExecuteTask(UBehaviorTreeComponent& Owne
 		{
 			// Destroy pawn from world
 			Pawn->Destroy();
+			return EBTNodeResult::Succeeded;
 		}
 	}
 
