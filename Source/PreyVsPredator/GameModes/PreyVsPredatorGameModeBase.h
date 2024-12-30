@@ -5,6 +5,8 @@
 #include "PreyVsPredatorGameModeBase.generated.h"
 
 
+class ABaseController;
+class ABaseEntity;
 class UWorldGridCell;
 class UGrid;
 
@@ -13,10 +15,22 @@ class PREYVSPREDATOR_API APreyVsPredatorGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Grid")
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Grid")
 	TSubclassOf<UWorldGridCell> WorldGridCellClass;
+
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Entities")
+	TSubclassOf<ABaseEntity> PreyClass;
+
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Entities")
+	TSubclassOf<ABaseController> PreyControllerClass;
+
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Entities")
+	uint32 MaxAmountPrey{20};
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaSeconds) override;
+
+private:
+	UFUNCTION()
+	void SpawnEntity();
 };

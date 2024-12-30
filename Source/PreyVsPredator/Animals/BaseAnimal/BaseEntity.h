@@ -108,7 +108,7 @@ private:
 	const float m_MaxStats{100.f};
 	float m_CurrentStamina{m_MaxStats};
 	float m_CurrentHealth{m_MaxStats};
-	float m_CurrentFood{m_MaxStats};
+	float m_CurrentFood{};
 	float m_CurrentWater{};
 	FTimerHandle m_StatsTimer{};
 	FTimerHandle m_FlockResetTimer{};

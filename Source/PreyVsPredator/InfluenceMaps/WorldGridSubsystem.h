@@ -32,6 +32,7 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 public:
 	void SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass);
 
+	FVector RandomPositionInGrid() const;
 	float AcceptanceRadius() const;
 	FVector NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const;
 	bool AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const;

@@ -17,30 +17,36 @@ void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellCla
 	const uint32 TotalCells{m_WorldGrid->TotalCells()};
 
 	// Assign water cells
-	// MakePond(0);
-	// MakePond(1);
-	// MakePond(Rows);
-	// MakePond(Rows + 1);
-	//
-	// MakePond(Rows - 1);
-	// MakePond(Rows - 2);
-	// MakePond(2 * Rows - 1);
-	// MakePond(2 * Rows - 2);
-	//
-	// MakePond(TotalCells / 2 + Rows / 2);
-	// MakePond(TotalCells / 2 - 1 + Rows / 2);
-	// MakePond(TotalCells / 2 - Rows / 2);
-	// MakePond(TotalCells / 2 - 1 - Rows / 2);
-	//
-	// MakePond(TotalCells - Rows);
-	// MakePond(TotalCells - Rows + 1);
-	// MakePond(TotalCells - 2 * Rows);
-	// MakePond(TotalCells - 2 * Rows + 1);
-	//
-	// MakePond(TotalCells - 1);
-	// MakePond(TotalCells - 2);
-	// MakePond(TotalCells - Rows - 1);
-	// MakePond(TotalCells - Rows - 2);
+	MakePond(0);
+	MakePond(1);
+	MakePond(Rows);
+	MakePond(Rows + 1);
+	
+	MakePond(Rows - 1);
+	MakePond(Rows - 2);
+	MakePond(2 * Rows - 1);
+	MakePond(2 * Rows - 2);
+	
+	MakePond(TotalCells / 2 + Rows / 2);
+	MakePond(TotalCells / 2 - 1 + Rows / 2);
+	MakePond(TotalCells / 2 - Rows / 2);
+	MakePond(TotalCells / 2 - 1 - Rows / 2);
+	
+	MakePond(TotalCells - Rows);
+	MakePond(TotalCells - Rows + 1);
+	MakePond(TotalCells - 2 * Rows);
+	MakePond(TotalCells - 2 * Rows + 1);
+	
+	MakePond(TotalCells - 1);
+	MakePond(TotalCells - 2);
+	MakePond(TotalCells - Rows - 1);
+	MakePond(TotalCells - Rows - 2);
+}
+
+FVector UWorldGridSubsystem::RandomPositionInGrid() const
+{
+	int32 RandomIndex{FMath::RandRange(0, m_WorldGrid->TotalCells() - 1)};
+	return m_WorldGrid->GridCellAtIndex(RandomIndex)->CenterPosition();
 }
 
 float UWorldGridSubsystem::AcceptanceRadius() const
@@ -62,7 +68,7 @@ FVector UWorldGridSubsystem::NextCellPosition(const FVector& CurrentPosition, EW
 bool UWorldGridSubsystem::AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const
 {
 	// Get cell we are currently in
-	UWorldGridCell* CurrentWorldCell{Cast<UWorldGridCell>(m_WorldGrid->CurrentGridCell(CurrentPosition))};
+	UWorldGridCell* CurrentWorldCell{Cast<UWorldGridCell>(m_WorldGrid->GridCellAtPosition(CurrentPosition))};
 	if (CurrentWorldCell != nullptr)
 	{
 		// Check if cell is type we want
@@ -78,7 +84,7 @@ bool UWorldGridSubsystem::AttemptConsumption(const FVector& CurrentPosition, EWo
 
 UWorldGridCell* UWorldGridSubsystem::CellAtPosition(const FVector& Pos) const
 {
-	return Cast<UWorldGridCell>(m_WorldGrid->CurrentGridCell(Pos));
+	return Cast<UWorldGridCell>(m_WorldGrid->GridCellAtPosition(Pos));
 }
 
 void UWorldGridSubsystem::MakePond(uint32 Index) const

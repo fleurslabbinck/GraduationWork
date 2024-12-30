@@ -32,6 +32,9 @@ ABaseEntity::ABaseEntity()
 	UCharacterMovementComponent* CharacterMovementComponent{GetCharacterMovement()};
 	CharacterMovementComponent->MaxAcceleration = Acceleration;
 	CharacterMovementComponent->bOrientRotationToMovement = true;
+
+	// Disable auto posses
+	AutoPossessAI = EAutoPossessAI::Disabled;
 }
 
 void ABaseEntity::BeginPlay()
@@ -90,6 +93,11 @@ void ABaseEntity::OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AAct
 #pragma region Stats
 void ABaseEntity::InitializeStats()
 {
+	// Set food and water to random value
+	m_CurrentFood = FMath::RandRange(LowFoodThresshold, m_MaxStats);
+	m_CurrentWater = FMath::RandRange(LowWaterThresshold, m_MaxStats);
+
+	// Set pointer to widget
 	if (UUserWidget* Widget{Cast<UUserWidget>(EntityStats->GetWidget())}; Widget != nullptr)
 	{
 		m_EntityStatsWidget = Cast<UEntityStats>(Widget);

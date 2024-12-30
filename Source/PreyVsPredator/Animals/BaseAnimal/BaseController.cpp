@@ -36,12 +36,17 @@ void ABaseController::BeginPlay()
 	m_StopFlockingCondition = NewObject<UStopFlockingCondition>();
 	M_DeadCondition = NewObject<UDeadCondition>();
 
-	// Set Behavior Tree classes
 	checkf(GrazingBehaviorTree != nullptr, TEXT("Grazing Behavior Tree not assigned"));
 	checkf(DrinkingBehaviorTree != nullptr, TEXT("Drinking Behavior Tree not assigned"));
 	checkf(FlockingBehaviorTree != nullptr, TEXT("Flocking Behavior Tree not assigned"));
 	checkf(DyingBehaviorTree != nullptr, TEXT("Dying Behavior Tree not assigned"));
-	
+}
+
+void ABaseController::OnPossess(APawn* InPawn)
+{
+	Super::OnPossess(InPawn);
+
+	// Set Behavior Tree classes
 	m_GrazingState->InitializeState(this, GrazingBehaviorTree);
 	m_DrinkingState->InitializeState(this, DrinkingBehaviorTree);
 	m_FlockingState->InitializeState(this, FlockingBehaviorTree);

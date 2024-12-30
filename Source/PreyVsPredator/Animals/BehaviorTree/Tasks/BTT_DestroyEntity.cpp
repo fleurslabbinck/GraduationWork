@@ -1,6 +1,7 @@
 ﻿#include "BTT_DestroyEntity.h"
 
 #include "PreyVsPredator/Animals/BaseAnimal/BaseController.h"
+#include "PreyVsPredator/Animals/Subsystems/WorldEventsSubsystem.h"
 
 EBTNodeResult::Type UBTT_DestroyEntity::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
@@ -8,8 +9,9 @@ EBTNodeResult::Type UBTT_DestroyEntity::ExecuteTask(UBehaviorTreeComponent& Owne
 	{
 		if (APawn* Pawn{BaseController->GetPawn()}; Pawn != nullptr)
 		{
-			// Destroy pawn from world
+			// Destroy pawn from world and broadcast event
 			Pawn->Destroy();
+			GetWorld()->GetSubsystem<UWorldEventsSubsystem>()->OnEntityDeath.Broadcast();
 			return EBTNodeResult::Succeeded;
 		}
 	}

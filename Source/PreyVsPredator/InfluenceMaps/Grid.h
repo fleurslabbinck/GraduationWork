@@ -20,7 +20,7 @@ public:
 	void Initialize(const FVector& GridPosition, uint8 GridRows, uint8 GridColumns, float CellSize);
 
 	uint32 TotalCells() const;
-	UGridCell* CurrentGridCell(const FVector& CurrentPosition) const;
+	UGridCell* GridCellAtPosition(const FVector& CurrentPosition) const;
 	UGridCell* NextGridCell(const FVector& CurrentPosition, EWorldCellType Type = EWorldCellType::None) const;
 	UGridCell* GridCellAtIndex(uint32 Index) const;
 

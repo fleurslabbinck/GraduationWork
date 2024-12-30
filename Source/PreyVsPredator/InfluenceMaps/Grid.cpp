@@ -52,10 +52,10 @@ uint32 UGrid::TotalCells() const
 	return m_GridCells.Num();
 }
 
-UGridCell* UGrid::CurrentGridCell(const FVector& CurrentPosition) const
+UGridCell* UGrid::GridCellAtPosition(const FVector& Position) const
 {
-	const FVector2D CurrentPosition2D{CurrentPosition.X, CurrentPosition.Y};
-	const uint32 CurrentCellIndex{IndexFromPosition(CurrentPosition2D)};
+	const FVector2D Position2D{Position.X, Position.Y};
+	const uint32 CurrentCellIndex{IndexFromPosition(Position2D)};
 
 	return CurrentCellIndex != INDEX_NONE ? m_GridCells[CurrentCellIndex] : nullptr;
 }
