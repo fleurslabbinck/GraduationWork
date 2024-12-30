@@ -14,9 +14,6 @@ class PREYVSPREDATOR_API UStateBase : public UObject
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Base")
-	float MaxSpeed{600.f};
-
 public:
 	UStateBase() = default;
 	
@@ -27,6 +24,8 @@ public:
 	virtual void OnExit(UBlackboardComponent* BlackboardComponent);
 
 protected:
+	float m_MaxSpeed{600.f};
+	
 	UPROPERTY()
 	AAIController* m_AIController{nullptr};
 	
@@ -36,5 +35,5 @@ protected:
 	UPROPERTY()
 	UCharacterMovementComponent* m_CharacterMovement{nullptr};
 
-	virtual void UpdateMaxSpeed();
+	void UpdateMaxSpeed();
 };

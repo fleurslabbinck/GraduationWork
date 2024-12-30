@@ -37,7 +37,6 @@ void UBTT_ConsumeType::ConsumeType(UBehaviorTreeComponent* OwnerComp)
 	{
 		Entity->Consume(TargetType);
 		BaseController->SetTimer(FTimerDelegate::CreateUObject(this, &UBTT_ConsumeType::ConsumeType, OwnerComp), EatTime);
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("eating grass"));
 	}
 	else
 	{

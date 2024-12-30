@@ -83,13 +83,6 @@ void ABaseEntity::InitializeStats()
 	if (UUserWidget* Widget{Cast<UUserWidget>(EntityStats->GetWidget())}; Widget != nullptr)
 	{
 		m_EntityStatsWidget = Cast<UEntityStats>(Widget);
-		if (m_EntityStatsWidget != nullptr)
-		{
-			m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Stamina, m_CurrentStamina);
-			m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Health, m_CurrentHealth);
-			m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Hunger, m_CurrentHunger);
-			m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Thirst, m_CurrentThirst);
-		}
 	}
 	
 	SetupStatsTimer();
@@ -112,15 +105,38 @@ void ABaseEntity::UpdateWidgetRotation()
 
 void ABaseEntity::UpdateStats()
 {
+	UpdateHealth();
+	UpdateFood();
+	UpdateWater();
+
+	if (m_Flock != nullptr)
+	{
+		// Clean slate
+		m_Flock->ResetNeeds();
+		
+		if (m_CurrentFood <= LowFoodThresshold && m_CurrentFood <= m_CurrentWater)
+		{
+			m_Flock->SetHungry();
+		}
+		
+		if (m_CurrentWater <= LowWaterThresshold)
+		{
+			m_Flock->SetThirsty();
+		}
+	}
+}
+
+void ABaseEntity::UpdateHealth()
+{
 	bool UpdateHealth{false};
 	
-	if (m_CurrentHunger >= LowFoodThresshold && m_CurrentThirst >= LowWaterThresshold)
+	if (m_CurrentFood >= LowFoodThresshold && m_CurrentWater >= LowWaterThresshold)
 	{
 		// Increase health if not hungry or thirsty
 		m_CurrentHealth = FMath::Clamp(m_CurrentHealth + HealthIncreaseRate, 0, m_MaxStats);
 		UpdateHealth = true;
 	}
-	else if (m_CurrentHunger < LowFoodThresshold || m_CurrentThirst < LowWaterThresshold)
+	else if (m_CurrentFood < FLT_EPSILON || m_CurrentWater < FLT_EPSILON)
 	{
 		// Decrease health if starving or dehydrated
 		m_CurrentHealth = FMath::Clamp(m_CurrentHealth - HealthDecreaseRate, 0, m_MaxStats);
@@ -132,37 +148,40 @@ void ABaseEntity::UpdateStats()
 		// Update health bar
 		m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Health, m_CurrentHealth);
 	}
-	
-	m_CurrentHunger = FMath::Clamp(m_CurrentHunger - FoodDecreaseRate, 0, m_MaxStats);
-	m_CurrentThirst = FMath::Clamp(m_CurrentThirst - WaterDecreaseRate, 0, m_MaxStats);
-
-	// Update hunger and thirst bars
-	m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Hunger, m_CurrentHunger);
-	m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Thirst, m_CurrentThirst);
-
-	// Check if entity thirsty
-	if (m_CurrentThirst < LowWaterThresshold && m_CurrentThirst < m_CurrentHunger)
-	{
-		if (m_Flock != nullptr)
-		{
-			m_Flock->SetThirsty(true);
-		}
-	}
 }
 
-bool ABaseEntity::LowHealth() const
+void ABaseEntity::UpdateFood()
 {
-	return m_CurrentHealth < LowHealthThresshold;
+	// Decrease and update bar
+	m_CurrentFood = FMath::Clamp(m_CurrentFood - FoodDecreaseRate, 0, m_MaxStats);
+	m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Hunger, m_CurrentFood);
+}
+
+void ABaseEntity::UpdateWater()
+{
+	// Decrease and update bar
+	m_CurrentWater = FMath::Clamp(m_CurrentWater - WaterDecreaseRate, 0, m_MaxStats);
+	m_EntityStatsWidget->UpdateStatsBar(EStatsBarType::Thirst, m_CurrentWater);
+}
+
+bool ABaseEntity::Dead() const
+{
+	return m_CurrentHealth <= FLT_EPSILON;
 }
 
 bool ABaseEntity::Hungry() const
 {
-	return m_CurrentHunger < LowFoodThresshold;
+	return m_CurrentFood < LowFoodThresshold;
 }
 
 bool ABaseEntity::Thirsty() const
 {
-	return m_CurrentThirst < LowWaterThresshold;
+	return m_CurrentWater < LowWaterThresshold;
+}
+
+bool ABaseEntity::FullWater() const
+{
+	return m_CurrentWater >= m_MaxStats;
 }
 
 void ABaseEntity::Consume(EWorldCellType Type)
@@ -171,10 +190,10 @@ void ABaseEntity::Consume(EWorldCellType Type)
 	{
 	case EWorldCellType::Grass:
 	case EWorldCellType::Carcass:
-		m_CurrentHunger = FMath::Clamp(m_CurrentHunger + FoodIncreaseRate, 0, m_MaxStats);
+		m_CurrentFood = FMath::Clamp(m_CurrentFood + FoodIncreaseRate, 0, m_MaxStats);
 		break;
 	case EWorldCellType::Water:
-		m_CurrentThirst = FMath::Clamp(m_CurrentThirst + WaterIncreaseRate, 0, m_MaxStats);
+		m_CurrentWater = FMath::Clamp(m_CurrentWater + WaterIncreaseRate, 0, m_MaxStats);
 		break;
 	default:
 		break;

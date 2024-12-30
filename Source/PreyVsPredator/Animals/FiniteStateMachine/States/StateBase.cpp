@@ -43,5 +43,5 @@ void UStateBase::OnExit(UBlackboardComponent* BlackboardComponent)
 void UStateBase::UpdateMaxSpeed()
 {
 	if (m_CharacterMovement == nullptr) return;
-	m_CharacterMovement->MaxWalkSpeed = MaxSpeed;
+	m_CharacterMovement->MaxWalkSpeed = m_MaxSpeed;
 }

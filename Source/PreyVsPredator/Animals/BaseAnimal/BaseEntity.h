@@ -43,34 +43,34 @@ class PREYVSPREDATOR_API ABaseEntity : public ACharacter
 	FName EntityTag{"Prey"};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
-	float StatsUpdateRate{0.3f};
+	float StatsUpdateRate{1.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
 	float LowHealthThresshold{20.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
-	float HealthIncreaseRate{0.3f};
+	float HealthIncreaseRate{8.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
-	float HealthDecreaseRate{0.05f};
+	float HealthDecreaseRate{5.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
 	float LowFoodThresshold{20.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
-	float FoodIncreaseRate{0.6f};
+	float FoodIncreaseRate{10.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
-	float FoodDecreaseRate{0.03f};
+	float FoodDecreaseRate{2.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
 	float LowWaterThresshold{20.f};
 	
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
-	float WaterIncreaseRate{0.4f};
+	float WaterIncreaseRate{20.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
-	float WaterDecreaseRate{0.01f};
+	float WaterDecreaseRate{1.f};
 	
 	UPROPERTY(EditAnywhere, Category="Entity|Flock")
 	uint32 MinFlockAmount{2};
@@ -81,9 +81,10 @@ class PREYVSPREDATOR_API ABaseEntity : public ACharacter
 public:
 	ABaseEntity();
 
-	bool LowHealth() const;
+	bool Dead() const;
 	bool Hungry() const;
 	bool Thirsty() const;
+	bool FullWater() const;
 
 	void Consume(EWorldCellType Type);
 	
@@ -102,8 +103,8 @@ private:
 	const float m_MaxStats{100.f};
 	float m_CurrentStamina{m_MaxStats};
 	float m_CurrentHealth{m_MaxStats};
-	float m_CurrentHunger{m_MaxStats};
-	float m_CurrentThirst{m_MaxStats};
+	float m_CurrentFood{m_MaxStats};
+	float m_CurrentWater{};
 	FTimerHandle m_StatsTimer{};
 	FTimerHandle m_FlockResetTimer{};
 
@@ -123,6 +124,9 @@ private:
 	void SetupStatsTimer();
 	void UpdateWidgetRotation();
 	void UpdateStats();
+	void UpdateHealth();
+	void UpdateFood();
+	void UpdateWater();
 
 	void InitializeFlock();
 	void HandleFlock(ABaseEntity* OtherEntity);

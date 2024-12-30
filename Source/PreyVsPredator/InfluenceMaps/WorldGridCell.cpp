@@ -44,6 +44,7 @@ void UWorldGridCell::ChangeWorldType(EWorldCellType NewType)
 		break;
 	case EWorldCellType::Water:
 		Color = WaterColor;
+		MaxEntities = 3;
 		break;
 	default:
 		return;

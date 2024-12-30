@@ -49,14 +49,30 @@ void ABaseFlock::RemoveEntity(ABaseEntity* EntityToRemove)
 	EntityToRemove->SetFlock(nullptr);
 }
 
+bool ABaseFlock::Hungry() const
+{
+	return bHungry;
+}
+
 bool ABaseFlock::Thirsty() const
 {
 	return bThirsty;
 }
 
-void ABaseFlock::SetThirsty(bool Thirsty)
+void ABaseFlock::SetHungry()
 {
-	bThirsty = Thirsty;
+	bHungry = true;
+}
+
+void ABaseFlock::SetThirsty()
+{
+	bThirsty = true;
+}
+
+void ABaseFlock::ResetNeeds()
+{
+	bHungry = false;
+	bThirsty = false;
 }
 
 FVector ABaseFlock::FlockLocation() const

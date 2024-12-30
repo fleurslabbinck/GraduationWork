@@ -27,4 +27,7 @@ class PREYVSPREDATOR_API UEntityStats : public UUserWidget
 
 public:
 	void UpdateStatsBar(EStatsBarType Type ,float NewValue) const;
+
+private:
+	const float m_InitValue{100.f};
 };

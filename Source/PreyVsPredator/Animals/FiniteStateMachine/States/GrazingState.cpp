@@ -6,6 +6,11 @@
 #include "PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h"
 
 
+UGrazingState::UGrazingState()
+{
+	m_MaxSpeed = m_MaxGrazingSpeed;
+}
+
 void UGrazingState::OnEnter(UBlackboardComponent* BlackboardComponent)
 {
 	Super::OnEnter(BlackboardComponent);
@@ -24,10 +29,4 @@ void UGrazingState::OnExit(UBlackboardComponent* BlackboardComponent)
 	{
 		CurrentCell->Unsubscribe(Entity);
 	}
-}
-
-void UGrazingState::UpdateMaxSpeed()
-{
-	if (m_CharacterMovement == nullptr) return;
-	m_CharacterMovement->MaxWalkSpeed = GrazingSpeed;
 }

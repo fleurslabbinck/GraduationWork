@@ -19,8 +19,11 @@ public:
 	void AddEntity(ABaseEntity* NewEntity);
 	void RemoveEntity(ABaseEntity* EntityToRemove);
 
+	bool Hungry() const;
 	bool Thirsty() const;
-	void SetThirsty(bool Thirsty);
+	void SetHungry();
+	void SetThirsty();
+	void ResetNeeds();
 	FVector FlockLocation() const;
 
 protected:
@@ -28,6 +31,7 @@ protected:
 	virtual void BeginDestroy() override;
 	
 private:
+	bool bHungry{false};
 	bool bThirsty{false};
 	
 	UPROPERTY()

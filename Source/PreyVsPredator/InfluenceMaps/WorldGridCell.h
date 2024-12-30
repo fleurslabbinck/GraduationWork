@@ -47,7 +47,7 @@ class PREYVSPREDATOR_API UWorldGridCell : public UGridCell
 	float RegenTime{0.5f};
 
 	UPROPERTY(EditAnywhere, Category="Grid")
-	int32 MaxEntities{3};
+	int32 MaxEntities{2};
 
 public:
 	UWorldGridCell() = default;

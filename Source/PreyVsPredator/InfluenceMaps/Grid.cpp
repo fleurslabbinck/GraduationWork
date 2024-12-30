@@ -40,7 +40,6 @@ void UGrid::Initialize(const FVector& GridPosition, uint8 GridRows, uint8 GridCo
 			// Make cell
 			Cell = NewObject<UGridCell>(GetWorld(), m_GridCellClass);
 			Cell->Initialize(Pos, CellSize);
-			Cell->DrawDebugCell(m_GridCells.Num());
 			
 			// Add to array
 			m_GridCells.Add(Cell);

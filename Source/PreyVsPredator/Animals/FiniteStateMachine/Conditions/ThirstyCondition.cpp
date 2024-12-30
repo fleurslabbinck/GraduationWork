@@ -8,22 +8,23 @@
 
 bool UThirstyCondition::Evaluate(UBlackboardComponent* BlackboardComponent) const
 {
-	bool ShouldHydrate{false};
+	bool Thirsty{false};
 	
 	if (const AAIController* Controller{Cast<AAIController>(BlackboardComponent->GetOwner())}; Controller != nullptr)
 	{
 		if (const ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())}; Entity != nullptr)
 		{
-			if (const ABaseFlock* Flock{Entity->Flock()}; Flock != nullptr)
+			if (ABaseFlock* Flock{Entity->Flock()}; Flock != nullptr)
 			{
-				ShouldHydrate = Flock->Thirsty();
+				// Check if flock is thirsty and no entity is hungry
+				Thirsty = Flock->Thirsty() && !Flock->Hungry();
 			}
 			else
 			{
-				ShouldHydrate = Entity->Thirsty();
+				Thirsty = Entity->Thirsty();
 			}
 		}
 	}
 	
-	return ShouldHydrate;
+	return Thirsty;
 }
