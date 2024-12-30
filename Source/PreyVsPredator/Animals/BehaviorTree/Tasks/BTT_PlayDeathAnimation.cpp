@@ -12,6 +12,7 @@ EBTNodeResult::Type UBTT_PlayDeathAnimation::ExecuteTask(UBehaviorTreeComponent&
 		{
 			// Broadcast death event to start death animation
 			Entity->OnDeath.Broadcast();
+			
 			return EBTNodeResult::Succeeded;
 		}
 	}

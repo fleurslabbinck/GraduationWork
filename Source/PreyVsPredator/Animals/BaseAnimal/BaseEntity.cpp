@@ -83,6 +83,8 @@ void ABaseEntity::OnPerceptionBegin(UPrimitiveComponent* OverlappedComponent, AA
 
 void ABaseEntity::OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	if (m_Flock == nullptr) return;
+	
 	// Check if other entity has same tag
 	if (OtherActor->ActorHasTag(EntityTag))
 	{

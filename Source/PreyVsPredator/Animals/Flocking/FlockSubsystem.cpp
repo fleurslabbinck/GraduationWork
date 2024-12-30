@@ -20,6 +20,13 @@ void UFlockSubsystem::UpdateFlocks()
 	// Remove flocks
 	for (ABaseFlock* FlockToRemove : FlocksToRemove)
 	{
+		// Remove entities from flock
+		for (ABaseEntity* Entity : FlockToRemove->Entities())
+		{
+			// Remove entities
+			FlockToRemove->RemoveEntity(Entity);
+		}
+		
 		m_Flocks.Remove(FlockToRemove);
 		FlockToRemove->Destroy();
 	}
