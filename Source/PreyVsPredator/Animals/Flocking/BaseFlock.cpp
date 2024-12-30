@@ -5,7 +5,7 @@
 void ABaseFlock::BeginPlay()
 {
 	Super::BeginPlay();
-
+	
 	UE_LOG(LogTemp, Warning, TEXT("Flock created"));
 }
 
@@ -14,9 +14,12 @@ void ABaseFlock::BeginDestroy()
 	Super::BeginDestroy();
 
 	// Reset current flock to nullptr
-	for (ABaseEntity* Entity : m_Entities)
+	if (!m_Entities.IsEmpty())
 	{
-		Entity->SetFlock(nullptr);
+		for (ABaseEntity* Entity : m_Entities)
+		{
+			Entity->SetFlock(nullptr);
+		}
 	}
 
 	m_Entities.Empty();
@@ -47,6 +50,11 @@ void ABaseFlock::RemoveEntity(ABaseEntity* EntityToRemove)
 {
 	m_Entities.Remove(EntityToRemove);
 	EntityToRemove->SetFlock(nullptr);
+
+	if (m_Entities.Num() <= 1)
+	{
+		OnFlockEmpty.Broadcast();
+	}
 }
 
 bool ABaseFlock::Hungry() const

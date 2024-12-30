@@ -14,11 +14,13 @@ class PREYVSPREDATOR_API UFlockSubsystem : public UWorldSubsystem
 	GENERATED_BODY()
 
 public:
-	void UpdateFlocks();
 	ABaseFlock* CreateFlock();
 	void MergeFlocks(ABaseFlock* Flock1, ABaseFlock* Flock2);
 
 private:
 	UPROPERTY()
 	TArray<ABaseFlock*> m_Flocks;
+
+	UFUNCTION()
+	void UpdateFlocks();
 };

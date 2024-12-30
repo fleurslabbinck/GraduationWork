@@ -1,6 +1,5 @@
 ﻿#include "BaseEntity.h"
 
-#include "BaseAnimInstance.h"
 #include "PreyVsPredator/Animals/Flocking/BaseFlock.h"
 #include "PreyVsPredator/Animals/Flocking/FlockSubsystem.h"
 #include "Components/CapsuleComponent.h"
@@ -53,6 +52,16 @@ void ABaseEntity::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	UpdateWidgetRotation();
+}
+
+void ABaseEntity::BeginDestroy()
+{
+	Super::BeginDestroy();
+
+	if (m_Flock != nullptr)
+	{
+		m_Flock->RemoveEntity(this);
+	}
 }
 
 void ABaseEntity::OnPerceptionBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -224,7 +233,7 @@ void ABaseEntity::InitializeFlock()
 		}
 	}
 
-	GetWorld()->GetSubsystem<UFlockSubsystem>()->UpdateFlocks();
+	m_Flock->OnFlockEmpty.Broadcast();
 }
 
 void ABaseEntity::HandleFlock(ABaseEntity* OtherEntity)
@@ -284,7 +293,6 @@ void ABaseEntity::ResetFlockTimer()
 {
 	// Set flock to nullptr, will be set again if in flocking state
 	m_Flock->RemoveEntity(this);
-	GetWorld()->GetSubsystem<UFlockSubsystem>()->UpdateFlocks();
 	
 	m_ShouldFlock = false;
 	

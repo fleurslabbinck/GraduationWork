@@ -33,6 +33,7 @@ ABaseFlock* UFlockSubsystem::CreateFlock()
 	if (NewFlock != nullptr)
 	{
 		m_Flocks.Add(NewFlock);
+		NewFlock->OnFlockEmpty.AddDynamic(this, &UFlockSubsystem::UpdateFlocks);
 	}
 	
 	return NewFlock;

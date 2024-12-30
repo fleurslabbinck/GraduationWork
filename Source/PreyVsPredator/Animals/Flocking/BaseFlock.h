@@ -7,6 +7,8 @@
 
 class ABaseEntity;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnFlockEmpty);
+
 UCLASS()
 class PREYVSPREDATOR_API ABaseFlock : public AActor
 {
@@ -25,6 +27,8 @@ public:
 	void SetThirsty();
 	void ResetNeeds();
 	FVector FlockLocation() const;
+
+	FOnFlockEmpty OnFlockEmpty;
 
 protected:
 	virtual void BeginPlay() override;
