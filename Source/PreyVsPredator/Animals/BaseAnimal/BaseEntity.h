@@ -13,6 +13,8 @@ class UBehaviorTree;
 class UArrowComponent;
 class UCapsuleComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
+
 namespace PreyVsPredator::CollisionPresets
 {
 	const FName AnimalCollision{TEXT("AnimalCollision")};
@@ -93,6 +95,8 @@ public:
 	
 	void SetFlock(ABaseFlock* NewFlock);
 	ABaseFlock* Flock() const;
+
+	FOnDeath OnDeath;
 
 protected:
 	virtual void BeginPlay() override;

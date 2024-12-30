@@ -17,30 +17,30 @@ void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellCla
 	const uint32 TotalCells{m_WorldGrid->TotalCells()};
 
 	// Assign water cells
-	MakePond(0);
-	MakePond(1);
-	MakePond(Rows);
-	MakePond(Rows + 1);
-	
-	MakePond(Rows - 1);
-	MakePond(Rows - 2);
-	MakePond(2 * Rows - 1);
-	MakePond(2 * Rows - 2);
-	
-	MakePond(TotalCells / 2 + Rows / 2);
-	MakePond(TotalCells / 2 - 1 + Rows / 2);
-	MakePond(TotalCells / 2 - Rows / 2);
-	MakePond(TotalCells / 2 - 1 - Rows / 2);
-	
-	MakePond(TotalCells - Rows);
-	MakePond(TotalCells - Rows + 1);
-	MakePond(TotalCells - 2 * Rows);
-	MakePond(TotalCells - 2 * Rows + 1);
-	
-	MakePond(TotalCells - 1);
-	MakePond(TotalCells - 2);
-	MakePond(TotalCells - Rows - 1);
-	MakePond(TotalCells - Rows - 2);
+	// MakePond(0);
+	// MakePond(1);
+	// MakePond(Rows);
+	// MakePond(Rows + 1);
+	//
+	// MakePond(Rows - 1);
+	// MakePond(Rows - 2);
+	// MakePond(2 * Rows - 1);
+	// MakePond(2 * Rows - 2);
+	//
+	// MakePond(TotalCells / 2 + Rows / 2);
+	// MakePond(TotalCells / 2 - 1 + Rows / 2);
+	// MakePond(TotalCells / 2 - Rows / 2);
+	// MakePond(TotalCells / 2 - 1 - Rows / 2);
+	//
+	// MakePond(TotalCells - Rows);
+	// MakePond(TotalCells - Rows + 1);
+	// MakePond(TotalCells - 2 * Rows);
+	// MakePond(TotalCells - 2 * Rows + 1);
+	//
+	// MakePond(TotalCells - 1);
+	// MakePond(TotalCells - 2);
+	// MakePond(TotalCells - Rows - 1);
+	// MakePond(TotalCells - Rows - 2);
 }
 
 float UWorldGridSubsystem::AcceptanceRadius() const

@@ -7,6 +7,9 @@
 #include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
 #include "BaseController.generated.h"
 
+class UDeadCondition;
+class UDyingState;
+class UFullWaterCondition;
 class UStopFlockingCondition;
 class UThirstyCondition;
 class UDrinkingState;
@@ -32,6 +35,9 @@ class PREYVSPREDATOR_API ABaseController : public AAIController, public IAnimalC
 
 	UPROPERTY(EditAnywhere, Category="Behavior Trees")
 	UBehaviorTree* DrinkingBehaviorTree;
+
+	UPROPERTY(EditAnywhere, Category="Behavior Trees")
+	UBehaviorTree* DyingBehaviorTree;
 	
 public:
 	ABaseController();
@@ -44,22 +50,39 @@ protected:
 
 private:
 	FTimerHandle m_Timer{};
+
+	//==================================================================================================================
+	// STATES
+	//==================================================================================================================
 	
 	UPROPERTY()
-	UGrazingState* m_GrazingState;
+	UGrazingState* m_GrazingState{nullptr};
 
 	UPROPERTY()
-	UDrinkingState* m_DrinkingState;
+	UDrinkingState* m_DrinkingState{nullptr};
 
 	UPROPERTY()
-	UFlockingState* m_FlockingState;
+	UFlockingState* m_FlockingState{nullptr};
 
 	UPROPERTY()
-	UThirstyCondition* m_ThirstyCondition;
+	UDyingState* m_DyingState{nullptr};
+
+	//==================================================================================================================
+	// CONDITIONS
+	//==================================================================================================================
 
 	UPROPERTY()
-	UStartFlockingCondition* m_StartFlockingCondition;
+	UThirstyCondition* m_ThirstyCondition{nullptr};
 
 	UPROPERTY()
-	UStopFlockingCondition* m_StopFlockingCondition;
+	UFullWaterCondition* m_FullWaterCondition{nullptr};
+
+	UPROPERTY()
+	UStartFlockingCondition* m_StartFlockingCondition{nullptr};
+
+	UPROPERTY()
+	UStopFlockingCondition* m_StopFlockingCondition{nullptr};
+
+	UPROPERTY()
+	UDeadCondition* M_DeadCondition{nullptr};
 };
