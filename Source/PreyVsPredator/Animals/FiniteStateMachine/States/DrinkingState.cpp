@@ -7,11 +7,16 @@
 
 class UWorldGridSubsystem;
 
+UDrinkingState::UDrinkingState()
+{
+	m_MaxSpeed = m_MaxDrinkingSpeed;
+}
+
 void UDrinkingState::OnEnter(UBlackboardComponent* BlackboardComponent)
 {
 	Super::OnEnter(BlackboardComponent);
 
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Hydrating State"));
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Drinking State"));
 }
 
 void UDrinkingState::OnExit(UBlackboardComponent* BlackboardComponent)
@@ -25,10 +30,4 @@ void UDrinkingState::OnExit(UBlackboardComponent* BlackboardComponent)
 	{
 		CurrentCell->Unsubscribe(Entity);
 	}
-}
-
-void UDrinkingState::UpdateMaxSpeed()
-{
-	if (m_CharacterMovement == nullptr) return;
-	m_CharacterMovement->MaxWalkSpeed = HydratingSpeed;
 }
