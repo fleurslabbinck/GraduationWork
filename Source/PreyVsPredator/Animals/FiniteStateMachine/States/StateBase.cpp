@@ -1,10 +1,9 @@
 ﻿#include "StateBase.h"
 
 #include "AIController.h"
-#include "BehaviorTree/BehaviorTreeComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "PreyVsPredator/Animals/Interfaces/AnimalControllerInterface.h"
+#include "PreyVsPredator/Animals/BaseAnimal/BaseController.h"
 
 void UStateBase::InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree)
 {
@@ -31,12 +30,9 @@ void UStateBase::Update(UBlackboardComponent* BlackboardComponent, float DeltaTi
 void UStateBase::OnExit(UBlackboardComponent* BlackboardComponent)
 {
 	// Clear timer
-	if (m_AIController->Implements<UAnimalControllerInterface>())
+	if (ABaseController* BaseController{Cast<ABaseController>(m_AIController)}; BaseController != nullptr)
 	{
-		if (IAnimalControllerInterface* AnimalController{Cast<IAnimalControllerInterface>(m_AIController)}; AnimalController != nullptr)
-		{
-			AnimalController->ResetTimer();
-		}
+		BaseController->ResetTimer();
 	}
 }
 
