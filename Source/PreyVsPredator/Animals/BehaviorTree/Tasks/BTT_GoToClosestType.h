@@ -12,7 +12,16 @@ class PREYVSPREDATOR_API UBTT_GoToClosestType : public UBTTask_BlackboardBase
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, Category="Params")
+	bool PureBehaviorTree{false};
+
+	UPROPERTY(EditAnywhere, Category="Params")
 	EWorldCellType TargetType{EWorldCellType::Grass};
+
+	UPROPERTY(EditAnywhere, Category="Blackboard In")
+	FBlackboardKeySelector ShouldFlockKey;
+
+	UPROPERTY(EditAnywhere, Category="Blackboard In")
+	FBlackboardKeySelector ThirstyKey;
 
 	UPROPERTY(EditAnywhere, Category="Blackboard In")
 	FBlackboardKeySelector ConsumeLocationKey;

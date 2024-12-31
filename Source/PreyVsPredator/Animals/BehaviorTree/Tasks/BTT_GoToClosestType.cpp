@@ -12,6 +12,8 @@ UBTT_GoToClosestType::UBTT_GoToClosestType()
 {
 	bNotifyTick = true;
 
+	ShouldFlockKey.AddBoolFilter(this, "ShouldFlock");
+	ThirstyKey.AddBoolFilter(this, "Thirsty");
 	ConsumeLocationKey.AddVectorFilter(this, "ConsumeLocation");
 }
 
@@ -68,6 +70,16 @@ void UBTT_GoToClosestType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 {
 	const AAIController* Controller{OwnerComp.GetAIOwner()};
 	if (Controller == nullptr) FinishLatentAbort(OwnerComp);
+
+	if (PureBehaviorTree && TargetType != EWorldCellType::Water)
+	{
+		// Fail if entity should flock or should drink
+		UBlackboardComponent* BlackboardComponent{OwnerComp.GetBlackboardComponent()};
+		if (BlackboardComponent->GetValueAsBool(ShouldFlockKey.SelectedKeyName) || BlackboardComponent->GetValueAsBool(ThirstyKey.SelectedKeyName))
+		{
+			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+		}
+	}
 
 	if (Controller->GetMoveStatus() == EPathFollowingStatus::Type::Idle)
 	{

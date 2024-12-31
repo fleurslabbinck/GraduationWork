@@ -55,7 +55,6 @@ void AHFSMBTHController::OnPossess(APawn* InPawn)
 	// Create transitions
 	FiniteStateMachine->SetStartState(m_GrazingState);
 	FiniteStateMachine->AddTransition(m_GrazingState, m_DrinkingState, m_ThirstyCondition);
-	FiniteStateMachine->AddTransition(m_FlockingState, m_DrinkingState, m_ThirstyCondition);
 	FiniteStateMachine->AddTransition(m_DrinkingState, m_GrazingState, m_FullWaterCondition);
 	FiniteStateMachine->AddTransition(m_GrazingState, m_FlockingState, m_StartFlockingCondition);
 	FiniteStateMachine->AddTransition(m_FlockingState, m_GrazingState, m_StopFlockingCondition);

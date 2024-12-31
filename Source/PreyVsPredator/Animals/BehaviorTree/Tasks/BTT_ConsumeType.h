@@ -12,10 +12,19 @@ class PREYVSPREDATOR_API UBTT_ConsumeType : public UBTTask_BlackboardBase
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, Category="Params")
-	EWorldCellType TargetType{EWorldCellType::Grass};;
+	bool PureBehaviorTree{false};
 
 	UPROPERTY(EditAnywhere, Category="Params")
-	float EatTime{1.f};
+	EWorldCellType TargetType{EWorldCellType::Grass};
+
+	UPROPERTY(EditAnywhere, Category="Params")
+	float ConsumeTime{1.f};
+	
+	UPROPERTY(EditAnywhere, Category="Blackboard In")
+	FBlackboardKeySelector ShouldFlockKey;
+
+	UPROPERTY(EditAnywhere, Category="Blackboard In")
+	FBlackboardKeySelector ThirstyKey;
 
 	UPROPERTY(EditAnywhere, Category="Blackboard Out")
 	FBlackboardKeySelector ConsumeLocationKey;
@@ -25,6 +34,7 @@ public:
 
 private:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
 	UFUNCTION()
 	void ConsumeType(UBehaviorTreeComponent* OwnerComp);

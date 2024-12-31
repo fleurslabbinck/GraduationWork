@@ -88,6 +88,11 @@ void ABaseEntity::OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AAct
 	// Check if other entity has same tag
 	if (OtherActor->ActorHasTag(EntityTag))
 	{
+		TArray<AActor*> OverlappingEntities{};
+		PerceptionSphere->GetOverlappingActors(OverlappingEntities);
+
+		if (OverlappingEntities.Num() > 1) return;
+		
 		HandleFlockOutOfReach();
 	}
 }
@@ -201,7 +206,7 @@ bool ABaseEntity::Thirsty() const
 
 bool ABaseEntity::FullWater() const
 {
-	return m_CurrentWater >= m_MaxStats;
+	return m_CurrentWater >= m_MaxStats - FullStatsMargin;
 }
 
 void ABaseEntity::Consume(EWorldCellType Type)
@@ -283,11 +288,6 @@ void ABaseEntity::HandleFlock(ABaseEntity* OtherEntity)
 
 void ABaseEntity::HandleFlockOutOfReach()
 {
-	TArray<AActor*> OverlappingEntities{};
-	PerceptionSphere->GetOverlappingActors(OverlappingEntities);
-
-	if (OverlappingEntities.Num() > 1) return;
-	
 	// Set bool to transition to flocking state if in grazing state
 	m_ShouldFlock = true;
 
@@ -301,10 +301,13 @@ bool ABaseEntity::ShouldFlock() const
 
 void ABaseEntity::ResetFlockTimer()
 {
-	// Set flock to nullptr, will be set again if in flocking state
-	m_Flock->RemoveEntity(this);
+	if (m_Flock != nullptr)
+	{
+		// Set flock to nullptr, will be set again if in flocking state
+		m_Flock->RemoveEntity(this);
 	
-	m_ShouldFlock = false;
+		m_ShouldFlock = false;
+	}
 	
 	// Reset timer in case we get here earlier
 	GetWorld()->GetTimerManager().ClearTimer(m_FlockResetTimer);

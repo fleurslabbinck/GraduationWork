@@ -11,11 +11,11 @@ class PREYVSPREDATOR_API APBTController : public ABaseController
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Components")
-	UBehaviorTreeComponent* BehaviorTreeComponent;
+	UPROPERTY(EditAnywhere, Category="Behavior Tree")
+	UBehaviorTree* BehaviorTree;
 
 public:
-	APBTController();
+	APBTController() = default;
 
 protected:
 	virtual void BeginPlay() override;

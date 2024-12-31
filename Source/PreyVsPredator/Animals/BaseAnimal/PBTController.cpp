@@ -1,19 +1,14 @@
 ﻿#include "PBTController.h"
 
-#include "BehaviorTree/BehaviorTreeComponent.h"
-
-
-APBTController::APBTController()
-{
-	PrimaryActorTick.bCanEverTick = false;
-
-	BehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>("Behavior Tree Component");
-}
 
 void APBTController::BeginPlay()
 {
 	Super::BeginPlay();
 
 	// Start to run behavior tree
-	RunBehaviorTree(BehaviorTreeComponent->GetRootTree());
+	checkf(BehaviorTree != nullptr, TEXT("Behavior Tree not assigned"))
+	if (!RunBehaviorTree(BehaviorTree))
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Black, TEXT("NO"));
+	}
 }
