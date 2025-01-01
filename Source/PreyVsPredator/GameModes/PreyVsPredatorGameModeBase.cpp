@@ -3,7 +3,7 @@
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
 #include "PreyVsPredator/Animals/BaseAnimal/HFSMBTHController.h"
 #include "PreyVsPredator/Animals/BaseAnimal/PBTController.h"
-#include "PreyVsPredator/Animals/Subsystems/WorldEventsSubsystem.h"
+#include "PreyVsPredator/Animals/WorldEvents/WorldEventsSubsystem.h"
 #include "PreyVsPredator/InfluenceMaps/WorldGridSubsystem.h"
 
 

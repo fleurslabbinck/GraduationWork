@@ -3,7 +3,7 @@
 #include "PreyVsPredator/Animals/BaseAnimal/BaseController.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
 #include "PreyVsPredator/Animals/Flocking/BaseFlock.h"
-#include "PreyVsPredator/Animals/Subsystems/WorldEventsSubsystem.h"
+#include "PreyVsPredator/Animals/WorldEvents/WorldEventsSubsystem.h"
 
 EBTNodeResult::Type UBTT_DestroyEntity::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {

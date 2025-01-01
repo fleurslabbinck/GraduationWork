@@ -69,7 +69,11 @@ bool UBTT_GoToClosestType::MoveToClosestTarget(UBehaviorTreeComponent& OwnerComp
 void UBTT_GoToClosestType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
 	const AAIController* Controller{OwnerComp.GetAIOwner()};
-	if (Controller == nullptr) FinishLatentAbort(OwnerComp);
+	if (Controller == nullptr)
+	{
+		FinishLatentAbort(OwnerComp);
+		return;
+	}
 
 	if (PureBehaviorTree && TargetType != EWorldCellType::Water)
 	{
@@ -78,6 +82,7 @@ void UBTT_GoToClosestType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* No
 		if (BlackboardComponent->GetValueAsBool(ShouldFlockKey.SelectedKeyName) || BlackboardComponent->GetValueAsBool(ThirstyKey.SelectedKeyName))
 		{
 			FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
+			return;
 		}
 	}
 
