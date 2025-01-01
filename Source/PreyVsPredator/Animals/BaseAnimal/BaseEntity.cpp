@@ -169,11 +169,25 @@ void ABaseEntity::UpdateHealth()
 		m_CurrentHealth = FMath::Clamp(m_CurrentHealth + HealthIncreaseRate, 0, m_MaxStats);
 		UpdateHealth = true;
 	}
-	else if (m_CurrentFood < FLT_EPSILON || m_CurrentWater < FLT_EPSILON)
+	else
 	{
-		// Decrease health if starving or dehydrated
-		m_CurrentHealth = FMath::Clamp(m_CurrentHealth - HealthDecreaseRate, 0, m_MaxStats);
-		UpdateHealth = true;
+		int8 DecreaseFactor{};
+		
+		if (m_CurrentFood < FLT_EPSILON)
+		{
+			++DecreaseFactor;
+		}
+		
+		if (m_CurrentWater < FLT_EPSILON)
+		{
+			++DecreaseFactor;
+		}
+
+		if (DecreaseFactor > 0)
+		{
+			m_CurrentHealth = FMath::Clamp(m_CurrentHealth - DecreaseFactor * HealthDecreaseRate, 0, m_MaxStats);
+			UpdateHealth = true;
+		}
 	}
 
 	if (UpdateHealth)
