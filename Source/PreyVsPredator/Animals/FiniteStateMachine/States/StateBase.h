@@ -24,6 +24,7 @@ public:
 	virtual void OnExit(UBlackboardComponent* BlackboardComponent);
 
 protected:
+	float m_SpeedFactor{1.f};
 	float m_MaxSpeed{600.f};
 	
 	UPROPERTY()

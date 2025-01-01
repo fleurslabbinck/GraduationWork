@@ -41,6 +41,9 @@ void ABaseEntity::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Set random speed factor
+	RunSpeedFactor = FMath::RandRange(MinSpeedFactor, MaxSpeedFactor);
+
 	// Set radius of perception sphere
 	PerceptionSphere->SetSphereRadius(PerceptionRadius);
 	PerceptionSphere->OnComponentBeginOverlap.AddDynamic(this, &ABaseEntity::OnPerceptionBegin);
@@ -95,6 +98,11 @@ void ABaseEntity::OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AAct
 		
 		HandleFlockOutOfReach();
 	}
+}
+
+float ABaseEntity::SpeedFactor() const
+{
+	return RunSpeedFactor;
 }
 
 #pragma region Stats

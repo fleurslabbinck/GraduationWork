@@ -1,19 +1,20 @@
 ﻿#include "StateBase.h"
 
 #include "AIController.h"
-#include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseController.h"
+#include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
 
 void UStateBase::InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree)
 {
 	m_AIController = AIController;
 	m_BehaviorTree = BehaviorTree;
 
-	const ACharacter* ControlledCharacter{Cast<ACharacter>(m_AIController->GetPawn())};
-	if (ControlledCharacter == nullptr) return;
+	const ABaseEntity* Entity{Cast<ABaseEntity>(m_AIController->GetPawn())};
+	if (Entity == nullptr) return;
 
-	m_CharacterMovement = ControlledCharacter->GetCharacterMovement();
+	m_SpeedFactor = Entity->SpeedFactor();
+	m_CharacterMovement = Entity->GetCharacterMovement();
 }
 
 void UStateBase::OnEnter(UBlackboardComponent* BlackboardComponent)
@@ -39,5 +40,5 @@ void UStateBase::OnExit(UBlackboardComponent* BlackboardComponent)
 void UStateBase::UpdateMaxSpeed()
 {
 	if (m_CharacterMovement == nullptr) return;
-	m_CharacterMovement->MaxWalkSpeed = m_MaxSpeed;
+	m_CharacterMovement->MaxWalkSpeed = m_SpeedFactor * m_MaxSpeed;
 }

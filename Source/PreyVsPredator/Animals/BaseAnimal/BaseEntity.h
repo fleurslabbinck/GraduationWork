@@ -38,6 +38,15 @@ class PREYVSPREDATOR_API ABaseEntity : public ACharacter
 	UPROPERTY(EditAnywhere, Category="Entity|Movement")
 	float Acceleration{1500.f};
 
+	UPROPERTY(EditAnywhere, Category="Entity|Movement")
+	float MinSpeedFactor{0.7f};
+
+	UPROPERTY(EditAnywhere, Category="Entity|Movement")
+	float MaxSpeedFactor{1.3f};
+
+	UPROPERTY(EditAnywhere, Category="Entity|Movement")
+	float RunSpeedFactor{1.f};
+
 	UPROPERTY(EditAnywhere, Category="Entity|Perception")
 	float PerceptionRadius{1000.f};
 
@@ -86,6 +95,8 @@ class PREYVSPREDATOR_API ABaseEntity : public ACharacter
 public:
 	ABaseEntity();
 
+	float SpeedFactor() const;
+	
 	bool Dead() const;
 	bool Hungry() const;
 	bool Thirsty() const;
