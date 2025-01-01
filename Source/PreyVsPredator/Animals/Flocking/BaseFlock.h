@@ -32,7 +32,6 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-	virtual void BeginDestroy() override;
 	
 private:
 	bool bHungry{false};

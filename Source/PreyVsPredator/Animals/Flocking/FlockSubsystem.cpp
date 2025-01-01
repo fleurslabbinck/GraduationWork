@@ -29,6 +29,7 @@ void UFlockSubsystem::UpdateFlocks()
 		
 		m_Flocks.Remove(FlockToRemove);
 		FlockToRemove->Destroy();
+		UE_LOG(LogTemp, Warning, TEXT("Flock destroyed"));
 	}
 
 	FlocksToRemove.Empty();

@@ -66,7 +66,6 @@ bool UWorldGridCell::Available() const
 void UWorldGridCell::Subscribe(AActor* EntityToAdd)
 {
 	m_SubscribedEntities.Add(EntityToAdd);
-	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT("Subscribed"));
 }
 
 void UWorldGridCell::Unsubscribe(AActor* EntityToRemove)
@@ -74,7 +73,6 @@ void UWorldGridCell::Unsubscribe(AActor* EntityToRemove)
 	if (m_SubscribedEntities.Contains(EntityToRemove))
 	{
 		m_SubscribedEntities.Remove(EntityToRemove);
-		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, TEXT("Unsubscribed"));
 	}
 }
 
