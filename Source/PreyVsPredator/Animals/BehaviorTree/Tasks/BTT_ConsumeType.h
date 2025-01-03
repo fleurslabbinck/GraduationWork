@@ -19,12 +19,6 @@ class PREYVSPREDATOR_API UBTT_ConsumeType : public UBTTask_BlackboardBase
 
 	UPROPERTY(EditAnywhere, Category="Params")
 	float ConsumeTime{1.f};
-	
-	UPROPERTY(EditAnywhere, Category="Blackboard In")
-	FBlackboardKeySelector ShouldFlockKey;
-
-	UPROPERTY(EditAnywhere, Category="Blackboard In")
-	FBlackboardKeySelector ThirstyKey;
 
 	UPROPERTY(EditAnywhere, Category="Blackboard Out")
 	FBlackboardKeySelector ConsumeLocationKey;
@@ -32,10 +26,12 @@ class PREYVSPREDATOR_API UBTT_ConsumeType : public UBTTask_BlackboardBase
 public:
 	UBTT_ConsumeType();
 
+protected:
+	virtual void OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult) override;
+
 private:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-	virtual void TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
-
+	
 	UFUNCTION()
 	void ConsumeType(UBehaviorTreeComponent* OwnerComp);
 };

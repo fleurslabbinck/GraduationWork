@@ -17,10 +17,11 @@ void UBTS_UpdateShouldFlock::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 	{
 		if (ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())}; Entity != nullptr)
 		{
-			if (const bool ShouldFlock{Entity->ShouldFlock()})
+			const bool ShouldFlock{Entity->ShouldFlock()};
+			if (ShouldFlock && Entity->Flock() != nullptr)
 			{
 				UBlackboardComponent* BlackboardComponent{OwnerComp.GetBlackboardComponent()};
-
+				
 				// Set the flock location entity should go to in blackboard
 				const FVector FlockLocation{Entity->Flock()->FlockLocation()};
 				BlackboardComponent->SetValueAsVector(FlockLocationKey.SelectedKeyName, FlockLocation);
@@ -30,6 +31,9 @@ void UBTS_UpdateShouldFlock::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* 
 
 				// Set should flock in blackboard
 				BlackboardComponent->SetValueAsBool(ShouldFlockKey.SelectedKeyName, ShouldFlock);
+
+				// Restart tree so entity can start flocking
+				OwnerComp.RestartTree();
 			}
 		}
 	}

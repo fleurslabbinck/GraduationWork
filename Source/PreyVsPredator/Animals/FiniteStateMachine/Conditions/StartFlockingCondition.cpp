@@ -16,7 +16,7 @@ bool UStartFlockingCondition::Evaluate(UBlackboardComponent* BlackboardComponent
 		if (ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())}; Entity != nullptr)
 		{
 			ShouldFlock = Entity->ShouldFlock();
-			if (ShouldFlock)
+			if (ShouldFlock && Entity->Flock() != nullptr)
 			{
 				// Set the flock location entity should go to in blackboard
 				const FVector FlockLocation{Entity->Flock()->FlockLocation()};

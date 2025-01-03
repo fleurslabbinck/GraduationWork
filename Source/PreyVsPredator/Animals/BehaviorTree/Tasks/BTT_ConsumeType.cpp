@@ -9,11 +9,28 @@
 
 UBTT_ConsumeType::UBTT_ConsumeType()
 {
-	bNotifyTick = true;
-
-	ShouldFlockKey.AddBoolFilter(this, "ShouldFlock");
-	ThirstyKey.AddBoolFilter(this, "Thirsty");
+	bNotifyTaskFinished = true;
+	
 	ConsumeLocationKey.AddVectorFilter(this, "ConsumeLocation");
+}
+
+void UBTT_ConsumeType::OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory,
+	EBTNodeResult::Type TaskResult)
+{
+	if (const AAIController* Controller{Cast<AAIController>(OwnerComp.GetAIOwner())}; Controller != nullptr)
+	{
+		if (ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())}; Entity != nullptr)
+		{
+			const UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
+	
+			// Unsubscribe from cell when done consuming
+			const FVector ConsumeLocation{OwnerComp.GetBlackboardComponent()->GetValueAsVector(ConsumeLocationKey.SelectedKeyName)};
+			if (UWorldGridCell* CurrentCell {WorldGrid->CellAtPosition(ConsumeLocation)}; CurrentCell != nullptr)
+			{
+				CurrentCell->Unsubscribe(Entity);
+			}
+		}
+	}
 }
 
 EBTNodeResult::Type UBTT_ConsumeType::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -21,40 +38,13 @@ EBTNodeResult::Type UBTT_ConsumeType::ExecuteTask(UBehaviorTreeComponent& OwnerC
 	ABaseController* BaseController{Cast<ABaseController>(OwnerComp.GetAIOwner())};
 	if (BaseController != nullptr)
 	{
+		// Start consumption
 		BaseController->SetTimer(FTimerDelegate::CreateUObject(this, &UBTT_ConsumeType::ConsumeType, &OwnerComp), ConsumeTime);
+
+		return EBTNodeResult::InProgress;
 	}
-	
-	return EBTNodeResult::InProgress;
-}
 
-void UBTT_ConsumeType::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
-{
-	Super::TickTask(OwnerComp, NodeMemory, DeltaSeconds);
-
-	if (!PureBehaviorTree || TargetType == EWorldCellType::Water) return;
-	
-	// Fail if entity should flock or should drink
-	UBlackboardComponent* BlackboardComponent{OwnerComp.GetBlackboardComponent()};
-	if (BlackboardComponent->GetValueAsBool(ShouldFlockKey.SelectedKeyName) || BlackboardComponent->GetValueAsBool(ThirstyKey.SelectedKeyName))
-	{
-		// Stop timer to keep consuming
-		if (ABaseController* BaseController{Cast<ABaseController>(OwnerComp.GetAIOwner())}; BaseController != nullptr)
-		{
-			BaseController->ResetTimer();
-
-			if (ABaseEntity* Entity{Cast<ABaseEntity>(BaseController->GetPawn())}; Entity != nullptr)
-			{
-				// Unsubscribe from cell when done consuming
-				const FVector ConsumeLocation{BlackboardComponent->GetValueAsVector(ConsumeLocationKey.SelectedKeyName)};
-				if (UWorldGridCell* CurrentCell {GetWorld()->GetSubsystem<UWorldGridSubsystem>()->CellAtPosition(ConsumeLocation)}; CurrentCell != nullptr)
-				{
-					CurrentCell->Unsubscribe(Entity);
-				}
-	
-				FinishLatentTask(OwnerComp, EBTNodeResult::Failed);
-			}
-		}
-	}
+	return EBTNodeResult::Aborted;
 }
 
 void UBTT_ConsumeType::ConsumeType(UBehaviorTreeComponent* OwnerComp)
@@ -94,13 +84,7 @@ void UBTT_ConsumeType::ConsumeType(UBehaviorTreeComponent* OwnerComp)
 	}
 	else if (!ConsumptionAttempt || !ShouldContinue)
 	{
-		// Unsubscribe from cell when done consuming
-		if (UWorldGridCell* CurrentCell {WorldGrid->CellAtPosition(ConsumeLocation)}; CurrentCell != nullptr)
-		{
-			CurrentCell->Unsubscribe(Entity);
-		}
-		
-		// Succeed if cell is fully consumed
+		// Succeed if cell is fully consumed or should stop continuing
 		FinishLatentTask(*OwnerComp, EBTNodeResult::Succeeded);
 	}
 }

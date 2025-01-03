@@ -19,6 +19,9 @@ void UBTS_UpdateDeadState::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* No
 			if (Entity->Dead())
 			{
 				OwnerComp.GetBlackboardComponent()->SetValueAsBool(DeadKey.SelectedKeyName, true);
+
+				// Restart tree so entity can die
+				OwnerComp.RestartTree();
 			}
 		}
 	}

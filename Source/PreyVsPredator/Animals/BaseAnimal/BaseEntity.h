@@ -57,7 +57,7 @@ class PREYVSPREDATOR_API ABaseEntity : public ACharacter
 	float StatsUpdateRate{1.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
-	float FullStatsMargin{10.f};
+	float FullStatsMargin{3.f};
 
 	UPROPERTY(EditAnywhere, Category="Entity|Stats")
 	float LowHealthThresshold{20.f};

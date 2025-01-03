@@ -16,7 +16,7 @@ void UBTS_UpdateThirstyState::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	{
 		if (ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())}; Entity != nullptr)
 		{
-			bool Thirsty{false};
+			bool Thirsty;
 			
 			if (const ABaseFlock* Flock{Entity->Flock()}; Flock != nullptr)
 			{
@@ -29,6 +29,12 @@ void UBTS_UpdateThirstyState::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 			}
 
 			OwnerComp.GetBlackboardComponent()->SetValueAsBool(ThirstyKey.SelectedKeyName, Thirsty);
+
+			if (Thirsty)
+			{
+				// Restart tree if thirsty so entity can drink
+				OwnerComp.RestartTree();
+			}
 		}
 	}
 }

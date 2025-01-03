@@ -1,6 +1,7 @@
 ﻿#include "BTT_PlayDeathAnimation.h"
 
 #include "AIController.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "PreyVsPredator/Animals/BaseAnimal/BaseEntity.h"
 
 
@@ -12,6 +13,9 @@ EBTNodeResult::Type UBTT_PlayDeathAnimation::ExecuteTask(UBehaviorTreeComponent&
 		{
 			// Broadcast death event to start death animation
 			Entity->OnDeath.Broadcast();
+
+			// Stop movement
+			Entity->GetCharacterMovement()->StopActiveMovement();
 			
 			return EBTNodeResult::Succeeded;
 		}
