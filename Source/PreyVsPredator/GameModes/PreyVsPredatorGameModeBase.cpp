@@ -17,7 +17,9 @@ void APreyVsPredatorGameModeBase::BeginPlay()
 	checkf(PBTPreyControllerClass != nullptr, TEXT("Prey Controller Class not assigned"));
 
 	// Initiate grid
-	GetWorld()->GetSubsystem<UWorldGridSubsystem>()->SetupGrid(WorldGridCellClass);
+	UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
+	WorldGrid->SetPondSize(PondSize);
+	WorldGrid->SetupGrid(WorldGridCellClass);
 
 	// Spawn entities
 	for (uint32 Index{}; Index < MaxAmountPrey; ++Index)

@@ -3,6 +3,11 @@
 #include "Grid.h"
 
 
+void UWorldGridSubsystem::SetPondSize(uint8 NewPondSize)
+{
+	PondSize = NewPondSize;
+}
+
 void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass)
 {
 	// Create grid object
@@ -14,33 +19,23 @@ void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellCla
 	// Fill grid with world grid cells
 	m_WorldGrid->Initialize(StartPosition, Rows, Columns, CellSize);
 
-	const uint32 TotalCells{m_WorldGrid->TotalCells()};
+	// Assign ponds
+	// Top-left corner
+	MakePond(0, 0);
 
-	// Assign water cells
-	MakePond(0);
-	MakePond(1);
-	MakePond(Rows);
-	MakePond(Rows + 1);
-	
-	MakePond(Rows - 1);
-	MakePond(Rows - 2);
-	MakePond(2 * Rows - 1);
-	MakePond(2 * Rows - 2);
-	
-	MakePond(TotalCells / 2 + Rows / 2);
-	MakePond(TotalCells / 2 - 1 + Rows / 2);
-	MakePond(TotalCells / 2 - Rows / 2);
-	MakePond(TotalCells / 2 - 1 - Rows / 2);
-	
-	MakePond(TotalCells - Rows);
-	MakePond(TotalCells - Rows + 1);
-	MakePond(TotalCells - 2 * Rows);
-	MakePond(TotalCells - 2 * Rows + 1);
-	
-	MakePond(TotalCells - 1);
-	MakePond(TotalCells - 2);
-	MakePond(TotalCells - Rows - 1);
-	MakePond(TotalCells - Rows - 2);
+	// Top-right corner
+	MakePond(0, Columns - PondSize);
+
+	// Bottom-left corner
+	MakePond(Rows - PondSize, 0);
+
+	// Bottom-right corner
+	MakePond(Rows - PondSize, Columns - PondSize);
+
+	// Middle (centered)
+	const uint32 MidRow{Rows / 2 - PondSize / 2};
+	const uint32 MidCol{Columns / 2 - PondSize / 2};
+	MakePond(MidRow, MidCol);
 }
 
 FVector UWorldGridSubsystem::RandomPositionInGrid() const
@@ -87,11 +82,23 @@ UWorldGridCell* UWorldGridSubsystem::CellAtPosition(const FVector& Pos) const
 	return Cast<UWorldGridCell>(m_WorldGrid->GridCellAtPosition(Pos));
 }
 
-void UWorldGridSubsystem::MakePond(uint32 Index) const
+void UWorldGridSubsystem::ChangeToWater(uint32 Index) const
 {
 	UWorldGridCell* Cell{Cast<UWorldGridCell>(m_WorldGrid->GridCellAtIndex(Index))};
 	if (Cell != nullptr)
 	{
 		Cell->ChangeWorldType(EWorldCellType::Water);
+	}
+}
+
+void UWorldGridSubsystem::MakePond(uint8 StartRow, uint8 StartCol) const
+{
+	for (uint8 Row{}; Row < PondSize; ++Row)
+	{
+		for (uint8 Col{}; Col < PondSize; ++Col)
+		{
+			const uint32 Index{(StartRow + Row) * Columns + (StartCol + Col)};
+			ChangeToWater(Index);
+		}
 	}
 }

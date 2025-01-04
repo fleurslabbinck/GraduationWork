@@ -29,7 +29,11 @@ class PREYVSPREDATOR_API UWorldGridSubsystem : public UWorldSubsystem
 	UPROPERTY(EditAnywhere, Category="Grid")
 	float AcceptanceDivisionFactor{3.f};
 
+	UPROPERTY(EditAnywhere, Category="Grid")
+	uint8 PondSize{2};
+
 public:
+	void SetPondSize(uint8 NewPondSize);
 	void SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass);
 
 	FVector RandomPositionInGrid() const;
@@ -42,5 +46,6 @@ private:
 	UPROPERTY()
 	UGrid* m_WorldGrid{nullptr};
 
-	void MakePond(uint32 Index) const;
+	void ChangeToWater(uint32 Index) const;
+	void MakePond(uint8 StartRow, uint8 StartCol) const;
 };

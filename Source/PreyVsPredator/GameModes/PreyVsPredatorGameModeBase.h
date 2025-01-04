@@ -34,6 +34,9 @@ class PREYVSPREDATOR_API APreyVsPredatorGameModeBase : public AGameModeBase
 	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Entities")
 	uint32 MaxAmountPrey{20};
 
+	UPROPERTY(EditAnywhere, Category="Grid")
+	uint8 PondSize{3};
+
 protected:
 	virtual void BeginPlay() override;
 
