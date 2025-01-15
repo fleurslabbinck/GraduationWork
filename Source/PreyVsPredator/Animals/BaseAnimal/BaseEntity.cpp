@@ -58,6 +58,11 @@ void ABaseEntity::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	UpdateWidgetRotation();
+
+	if (m_TimeReactivity)
+	{
+		m_ReactivityTimer += DeltaSeconds;
+	}
 }
 
 void ABaseEntity::BeginDestroy()
@@ -98,6 +103,28 @@ void ABaseEntity::OnPerceptionEnd(UPrimitiveComponent* OverlappedComponent, AAct
 		
 		HandleFlockOutOfReach();
 	}
+}
+
+void ABaseEntity::SetDead()
+{
+	m_CurrentHealth = 0;
+	m_TimeReactivity = true;
+}
+
+void ABaseEntity::SetThirsty()
+{
+	m_CurrentWater = 0;
+	m_TimeReactivity = true;
+}
+
+void ABaseEntity::StopReactivityTimer()
+{
+	if (!m_TimeReactivity) return;
+	
+	GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Red, FString::Printf(TEXT("Time to react: %f"), m_ReactivityTimer));
+	UE_LOG(LogTemp, Warning, TEXT("Time to react: %f"), m_ReactivityTimer);
+	m_ReactivityTimer = 0;
+	m_TimeReactivity = false;
 }
 
 float ABaseEntity::SpeedFactor() const

@@ -12,6 +12,22 @@
   <component name="ChangeListManager">
     <list default="true" id="bb1db2a9-dc43-4ac1-abeb-8d78f1b6cf55" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.PreyVsPredator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.PreyVsPredator/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Animals/Prey/BP_Boar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Animals/Prey/BP_Boar.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Animals/Prey/PBT/BT_PBTPrey.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Animals/Prey/PBT/BT_PBTPrey.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Animals/Widgets/BPW_EntityStats.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Animals/Widgets/BPW_EntityStats.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Grid/BP_WorldGridCell.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Grid/BP_WorldGridCell.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/Test.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Test.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SimBlank/Blueprints/BP_SimGameMode.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SimBlank/Blueprints/BP_SimGameMode.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/SimBlank/Blueprints/BP_SimPlayerController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/SimBlank/Blueprints/BP_SimPlayerController.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseEntity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseEntity.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseEntity.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BaseAnimal/BaseEntity.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_ConsumeType.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_ConsumeType.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestType.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_GoToClosestType.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_PlayDeathAnimation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/BehaviorTree/Tasks/BTT_PlayDeathAnimation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/FiniteStateMachine.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/Animals/FiniteStateMachine/States/StateBase.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/GameModes/PreyVsPredatorGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/GameModes/PreyVsPredatorGameModeBase.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/GameModes/PreyVsPredatorGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/GameModes/PreyVsPredatorGameModeBase.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridSubsystem.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/PreyVsPredator/InfluenceMaps/WorldGridSubsystem.cpp" afterDir="false" />
@@ -99,7 +115,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;C++ Project.PreyVsPredator.executor&quot;: &quot;Debug&quot;,
+    &quot;C++ Project.PreyVsPredator.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
@@ -267,6 +283,10 @@
       <workItem from="1735632185517" duration="21220000" />
       <workItem from="1735737572955" duration="12361000" />
       <workItem from="1735892811216" duration="12164000" />
+      <workItem from="1736363565093" duration="20926000" />
+      <workItem from="1736514335407" duration="9575000" />
+      <workItem from="1736605435579" duration="6926000" />
+      <workItem from="1736675064612" duration="2249000" />
     </task>
     <servers />
   </component>

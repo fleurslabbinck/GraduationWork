@@ -95,6 +95,14 @@ class PREYVSPREDATOR_API ABaseEntity : public ACharacter
 public:
 	ABaseEntity();
 
+	UFUNCTION(BlueprintCallable)
+	void SetDead();
+
+	UFUNCTION(BlueprintCallable)
+	void SetThirsty();
+
+	void StopReactivityTimer();
+
 	float SpeedFactor() const;
 	
 	bool Dead() const;
@@ -126,6 +134,9 @@ private:
 	float m_CurrentWater{};
 	FTimerHandle m_StatsTimer{};
 	FTimerHandle m_FlockResetTimer{};
+
+	bool m_TimeReactivity{false};
+	float m_ReactivityTimer{};
 
 	UPROPERTY()
 	ABaseFlock* m_Flock{nullptr};

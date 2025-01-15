@@ -42,12 +42,6 @@ void UFiniteStateMachine::TickComponent(float DeltaTime, ELevelTick TickType, FA
 			}
 		}
 	}
-	
-	// Update current state
-	if (m_CurrentState != nullptr)
-	{
-		m_CurrentState->Update(BlackboardComponent, DeltaTime);
-	}
 }
 
 void UFiniteStateMachine::SetStartState(UStateBase* StartState)

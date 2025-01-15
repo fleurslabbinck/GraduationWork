@@ -20,7 +20,6 @@ public:
 	void InitializeState(AAIController* AIController, UBehaviorTree* BehaviorTree);
 	
 	virtual void OnEnter(UBlackboardComponent* BlackboardComponent);
-	virtual void Update(UBlackboardComponent* BlackboardComponent, float DeltaTime);
 	virtual void OnExit(UBlackboardComponent* BlackboardComponent);
 
 protected:
@@ -36,5 +35,5 @@ protected:
 	UPROPERTY()
 	UCharacterMovementComponent* m_CharacterMovement{nullptr};
 
-	void UpdateMaxSpeed();
+	void UpdateMaxSpeed() const;
 };

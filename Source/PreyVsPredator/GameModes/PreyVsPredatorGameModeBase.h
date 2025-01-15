@@ -19,6 +19,21 @@ class PREYVSPREDATOR_API APreyVsPredatorGameModeBase : public AGameModeBase
 	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Grid")
 	TSubclassOf<UWorldGridCell> WorldGridCellClass;
 
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Grid")
+	FVector StartPosition{};
+
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Grid")
+	uint32 Rows{50};
+
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Grid")
+	uint32 Columns{50};
+
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Grid")
+	float CellSize{150.f};
+
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Grid")
+	uint8 PondSize{3};
+
 	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Simulation")
 	ESimulationMethod SimulationMethod{ESimulationMethod::HFSMBTH};
 
@@ -33,14 +48,24 @@ class PREYVSPREDATOR_API APreyVsPredatorGameModeBase : public AGameModeBase
 
 	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Entities")
 	uint32 MaxAmountPrey{20};
+	
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Simulation")
+	float SimulationDuration{90.f};
 
-	UPROPERTY(EditAnywhere, Category="Grid")
-	uint8 PondSize{3};
+	UPROPERTY(EditAnywhere, Category="PreyVsPredator|Simulation")
+	float BenchmarkInterval{10.f};
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
+	TArray<double> m_RecordedFPS;
+	FTimerHandle m_BenchmarkTimer{};
+	
 	UFUNCTION()
 	void SpawnEntity();
+
+	void StartSimulation();
+	void RecordFPS();
+	void EndSimulation();
 };

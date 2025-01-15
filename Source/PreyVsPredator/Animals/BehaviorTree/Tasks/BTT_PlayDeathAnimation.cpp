@@ -9,13 +9,16 @@ EBTNodeResult::Type UBTT_PlayDeathAnimation::ExecuteTask(UBehaviorTreeComponent&
 {
 	if (const AAIController* Controller{Cast<AAIController>(OwnerComp.GetAIOwner())}; Controller != nullptr)
 	{
-		if (const ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())}; Entity != nullptr)
+		if (ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())}; Entity != nullptr)
 		{
 			// Broadcast death event to start death animation
 			Entity->OnDeath.Broadcast();
 
 			// Stop movement
 			Entity->GetCharacterMovement()->StopActiveMovement();
+
+			// Stop reactivity timer
+			Entity->StopReactivityTimer();
 			
 			return EBTNodeResult::Succeeded;
 		}

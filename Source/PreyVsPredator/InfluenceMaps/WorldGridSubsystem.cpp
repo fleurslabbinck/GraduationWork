@@ -5,11 +5,15 @@
 
 void UWorldGridSubsystem::SetPondSize(uint8 NewPondSize)
 {
-	PondSize = NewPondSize;
+	m_PondSize = NewPondSize;
 }
 
-void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass)
+void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellClass, const FVector& StartPosition, uint32 Rows, uint32 Columns, float CellSize)
 {
+	m_CellSize = CellSize;
+	m_Rows = Rows;
+	m_Columns = Columns;
+	
 	// Create grid object
 	m_WorldGrid = NewObject<UGrid>(GetWorld(), UGrid::StaticClass());
 
@@ -20,44 +24,33 @@ void UWorldGridSubsystem::SetupGrid(TSubclassOf<UWorldGridCell> WorldGridCellCla
 	m_WorldGrid->Initialize(StartPosition, Rows, Columns, CellSize);
 
 	// Assign ponds
-	// Top-left corner
-	MakePond(0, 0);
-
-	// Top-right corner
-	MakePond(0, Columns - PondSize);
-
-	// Bottom-left corner
-	MakePond(Rows - PondSize, 0);
-
-	// Bottom-right corner
-	MakePond(Rows - PondSize, Columns - PondSize);
-
-	// Middle (centered)
-	const uint32 MidRow{Rows / 2 - PondSize / 2};
-	const uint32 MidCol{Columns / 2 - PondSize / 2};
-	MakePond(MidRow, MidCol);
-}
-
-FVector UWorldGridSubsystem::RandomPositionInGrid() const
-{
-	int32 RandomIndex{FMath::RandRange(0, m_WorldGrid->TotalCells() - 1)};
-	return m_WorldGrid->GridCellAtIndex(RandomIndex)->CenterPosition();
-}
-
-float UWorldGridSubsystem::AcceptanceRadius() const
-{
-	return CellSize / AcceptanceDivisionFactor;
-}
-
-FVector UWorldGridSubsystem::NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const
-{
-	FVector NextPos{FVector::ZeroVector};
-	if (const UGridCell* NextGridCell{m_WorldGrid->NextGridCell(CurrentPosition, Type)}; NextGridCell != nullptr)
+	constexpr uint32 PondRepetition{50};
+	
+	for (uint32 Row{}; Row < m_Rows; Row += PondRepetition)
+		for (uint32 Col{}; Col < m_Columns; Col += PondRepetition)
 	{
-		NextPos = NextGridCell->CenterPosition();
+		{
+			//const int Correction{PondRepetition - m_PondSize / 2};
+			MakePond(Row, Col);
+		}
 	}
-
-	return NextPos;
+	
+	// // Top-left corner
+	// MakePond(0, 0);
+	//
+	// // Top-right corner
+	// MakePond(0, Columns - m_PondSize);
+	//
+	// // Bottom-left corner
+	// MakePond(Rows - m_PondSize, 0);
+	//
+	// // Bottom-right corner
+	// MakePond(Rows - m_PondSize, Columns - m_PondSize);
+	//
+	// // Middle (centered)
+	// const uint32 MidRow{Rows / 2 - m_PondSize / 2};
+	// const uint32 MidCol{Columns / 2 - m_PondSize / 2};
+	// MakePond(MidRow, MidCol);
 }
 
 bool UWorldGridSubsystem::AttemptConsumption(const FVector& CurrentPosition, EWorldCellType Type) const
@@ -77,6 +70,28 @@ bool UWorldGridSubsystem::AttemptConsumption(const FVector& CurrentPosition, EWo
 	return false;
 }
 
+float UWorldGridSubsystem::AcceptanceRadius() const
+{
+	return m_CellSize / m_AcceptanceDivisionFactor;
+}
+
+FVector UWorldGridSubsystem::RandomPositionInGrid() const
+{
+	int32 RandomIndex{FMath::RandRange(0, m_WorldGrid->TotalCells() - 1)};
+	return m_WorldGrid->GridCellAtIndex(RandomIndex)->CenterPosition();
+}
+
+FVector UWorldGridSubsystem::NextCellPosition(const FVector& CurrentPosition, EWorldCellType Type) const
+{
+	FVector NextPos{FVector::ZeroVector};
+	if (const UGridCell* NextGridCell{m_WorldGrid->NextGridCell(CurrentPosition, Type)}; NextGridCell != nullptr)
+	{
+		NextPos = NextGridCell->CenterPosition();
+	}
+
+	return NextPos;
+}
+
 UWorldGridCell* UWorldGridSubsystem::CellAtPosition(const FVector& Pos) const
 {
 	return Cast<UWorldGridCell>(m_WorldGrid->GridCellAtPosition(Pos));
@@ -91,13 +106,13 @@ void UWorldGridSubsystem::ChangeToWater(uint32 Index) const
 	}
 }
 
-void UWorldGridSubsystem::MakePond(uint8 StartRow, uint8 StartCol) const
+void UWorldGridSubsystem::MakePond(uint16 StartRow, uint16 StartCol) const
 {
-	for (uint8 Row{}; Row < PondSize; ++Row)
+	for (uint8 Row{}; Row < m_PondSize; ++Row)
 	{
-		for (uint8 Col{}; Col < PondSize; ++Col)
+		for (uint8 Col{}; Col < m_PondSize; ++Col)
 		{
-			const uint32 Index{(StartRow + Row) * Columns + (StartCol + Col)};
+			const uint32 Index{(StartRow + Row) * m_Columns + (StartCol + Col)};
 			ChangeToWater(Index);
 		}
 	}

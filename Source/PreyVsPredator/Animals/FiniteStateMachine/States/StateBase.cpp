@@ -23,11 +23,6 @@ void UStateBase::OnEnter(UBlackboardComponent* BlackboardComponent)
 	m_AIController->RunBehaviorTree(m_BehaviorTree);
 }
 
-void UStateBase::Update(UBlackboardComponent* BlackboardComponent, float DeltaTime)
-{
-	
-}
-
 void UStateBase::OnExit(UBlackboardComponent* BlackboardComponent)
 {
 	// Clear timer
@@ -37,7 +32,7 @@ void UStateBase::OnExit(UBlackboardComponent* BlackboardComponent)
 	}
 }
 
-void UStateBase::UpdateMaxSpeed()
+void UStateBase::UpdateMaxSpeed() const
 {
 	if (m_CharacterMovement == nullptr) return;
 	m_CharacterMovement->MaxWalkSpeed = m_SpeedFactor * m_MaxSpeed;

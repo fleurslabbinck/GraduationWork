@@ -14,8 +14,7 @@ UBTT_ConsumeType::UBTT_ConsumeType()
 	ConsumeLocationKey.AddVectorFilter(this, "ConsumeLocation");
 }
 
-void UBTT_ConsumeType::OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory,
-	EBTNodeResult::Type TaskResult)
+void UBTT_ConsumeType::OnTaskFinished(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, EBTNodeResult::Type TaskResult)
 {
 	if (const AAIController* Controller{Cast<AAIController>(OwnerComp.GetAIOwner())}; Controller != nullptr)
 	{

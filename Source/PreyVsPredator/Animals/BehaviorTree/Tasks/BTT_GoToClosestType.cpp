@@ -30,6 +30,9 @@ bool UBTT_GoToClosestType::MoveToClosestTarget(UBehaviorTreeComponent& OwnerComp
 		ABaseEntity* Entity{Cast<ABaseEntity>(Controller->GetPawn())};
 		if (Entity != nullptr)
 		{
+			// Stop reactivity timer
+			Entity->StopReactivityTimer();
+			
 			const UWorldGridSubsystem* WorldGrid{GetWorld()->GetSubsystem<UWorldGridSubsystem>()};
 			
 			// Get next target type cell from world grid
